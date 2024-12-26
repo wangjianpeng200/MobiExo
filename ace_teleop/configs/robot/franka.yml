@@ -1,0 +1,136 @@
+# robot_cfg:
+#   name: franka_gripper
+#   urdf_path: franka/bimanual_franka_gripper.urdf
+
+
+#   dof_num: 18
+
+#   left_arm_indices: [0, 1, 2, 3, 4, 5, 6]
+#   right_arm_indices: [9, 10, 11, 12, 13, 14, 15]
+
+#   left_arm_init: [0.0, 0.0, 0.0, -1.57, 0.0, 1.57, 0.7]
+#   right_arm_init: [0.0, 0.0, 0.0, -1.57, 0.0, 1.57, 0.7]
+
+#   ee_type: "gripper"
+#   gripper_type: "2dof"
+#   left_ee: l_ace
+#   right_ee: r_ace
+
+#   left_ee_indices: [7, 8]
+#   right_ee_indices: [16, 17]
+  
+#   human_hand_indices: [4, 9]
+#   hand_low_pass_alpha: 0.8
+#   wrist_low_pass_alpha: 0.5
+
+#   arm:
+#     dt:  1e-1
+#     eps: 1e-4
+#     damp: 1e-12
+#     out_lp_alpha: 0.5
+
+#   ee:
+#     left_ee:
+#       gripper_range: [0.0, 0.04]
+
+#     right_ee:
+#       gripper_range: [0.0, 0.04]
+
+
+
+# robot_cfg:
+#   name: franka_gripper
+#   urdf_path: gen_72_b_description/urdf/GEN72_2.urdf
+
+#   dof_num: 26
+
+#   left_arm_indices: [0, 1, 2, 3, 4, 5, 6]
+#   # right_arm_indices: [9, 10, 11, 12, 13, 14, 15]
+#   right_arm_indices: [13, 14, 15, 16, 17, 18, 19]
+
+
+#   # left_arm_init: [0.0, 0.0, 0.0, -1.57, 0.0, 1.57, 0.7]
+#   # right_arm_init: [0.0, 0.0, 0.0, -1.57, 0.0, 1.57, 0.7]
+#   left_arm_init: [0.0, 0.0, 0.0, -1.57, 0.0, 0.0, 0.0]
+#   right_arm_init: [0.0, 0.0, 0.0, -1.57, 0.0, 0.0, 0.0]
+
+#   # left_arm_init: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+#   # right_arm_init: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]sssssssssssssss
+
+#   # left_arm_init: [-0.2, 0.26, -0.78, -0.79, -1.1, 0.76, 0.52]
+#   # right_arm_init: [-0.2, -0.26, 0.78, -0.79, 1.1, -0.76, 0.52]
+
+#   ee_type: "gripper"
+#   gripper_type: "1dof"
+#   left_ee: l_ace
+#   right_ee: r_ace
+
+#   # left_ee_indices: [7,8,18,19,20,21]
+#   # right_ee_indices: [16, 17,22,23,24,25]
+#   left_ee_indices: [12]
+#   right_ee_indices: [25]
+
+#   # left_ee_indices: [7,8]
+#   # right_ee_indices: [16,17]
+
+#   human_hand_indices: [4, 9]
+#   hand_low_pass_alpha: 0.8
+#   wrist_low_pass_alpha: 0.5
+
+#   arm:
+#     dt:  1e-1
+#     eps: 1e-4
+#     damp: 1e-12
+#     out_lp_alpha: 0.5
+
+#   ee:
+#     left_ee:
+#       gripper_range: [0.0, 0.04]
+
+#     right_ee:
+#       gripper_range: [0.0, 0.04]
+
+
+robot_cfg:
+  name: franka_gripper
+  urdf_path: gen_72_b_description/urdf/GEN72_franka.urdf
+
+  dof_num: 18
+
+  left_arm_indices: [0, 1, 2, 3, 4, 5, 6]
+  right_arm_indices: [9, 10, 11, 12, 13, 14, 15]
+
+
+  left_arm_init: [0.0, 0.0, 0.0, -1.57, 0.0, 1.57, 0.7]
+  right_arm_init: [0.0, 0.0, 0.0, -1.57, 0.0, 1.57, 0.7]
+  # left_arm_init: [0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.0]
+  # right_arm_init: [0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.0]
+
+  # left_arm_init: [-0.2, 0.26, -0.78, -0.79, -1.1, 0.76, 0.52]
+  # right_arm_init: [-0.2, -0.26, 0.78, -0.79, 1.1, -0.76, 0.52]
+
+  ee_type: "gripper"
+  gripper_type: "2dof"
+  left_ee: l_ace
+  right_ee: r_ace
+
+  left_ee_indices: [7, 8]
+  right_ee_indices: [16, 17]
+
+  human_hand_indices: [4, 9]
+  hand_low_pass_alpha: 0.8
+  wrist_low_pass_alpha: 0.5
+
+  arm:
+    dt:  1e-1
+    eps: 1e-4
+    damp: 1e-12
+    out_lp_alpha: 0.5
+
+  ee:
+    left_ee:
+      gripper_range: [0.0, 0.04]
+
+    right_ee:
+      gripper_range: [0.0, 0.04]
+
