@@ -220,3 +220,5 @@ To better control the robot, go to `ace_teleop/configs/server` and modify `pos_s
 
 ## Acknowlegments
 This code base refers a lot to many previous amazing works like [BunnyVisionPro](https://github.com/Dingry/bunny_teleop_server), [OpenTeleVision](https://github.com/OpenTeleVision/TeleVision), [GELLO](https://github.com/wuphilipp/gello_software). Also, the codes are built on some superior public project, such as [pinocchio](https://github.com/stack-of-tasks/pinocchio) and [dex-retargeting](https://github.com/dexsuite/dex-retargeting).
+#   A C E T e l e o p _ g e n 7 2  
+ 
