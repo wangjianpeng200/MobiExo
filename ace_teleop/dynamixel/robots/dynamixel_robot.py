@@ -79,10 +79,23 @@ class DynamixelRobot(Robot):
         self.ee_frame_id = frame_mapping[ee_link_name]
 
     def compute_ee_pose(self, joint_pos: np.ndarray):
+        """
+        计算机器人末端执行器的位姿。
 
+        该方法使用Pinocchio库来计算给定关节位置下机器人末端执行器的位姿。
+
+        参数:
+        - joint_pos: 一个包含机器人关节位置的NumPy数组。
+
+        返回:
+        一个4x4的齐次变换矩阵,表示机器人末端执行器在世界坐标系中的位姿。
+        """
+        # 使用Pinocchio库进行正向运动学计算，更新机器人的运动学数据
         pin.forwardKinematics(self.model, self.data, joint_pos)
+        # 更新末端执行器的位姿
         oMf: pin.SE3 = pin.updateFramePlacement(self.model, self.data, self.ee_frame_id)
 
+        # 返回末端执行器的齐次变换矩阵
         return oMf.homogeneous
 
     @property

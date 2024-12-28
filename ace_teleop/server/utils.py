@@ -7,7 +7,19 @@ from dataclasses import dataclass, field
 
 
 def get_mapping_offset(center, ee_pos, action_scale):
+    """
+    计算从末端执行器位置到中心位置的映射偏移量。
+
+    参数:
+    center (np.ndarray): 目标中心位置的坐标。
+    ee_pos (np.ndarray): 末端执行器的当前位置坐标。
+    action_scale (float): 缩放因子，用于调整偏移量的大小。
+
+    返回:
+    np.ndarray: 计算得到的从末端执行器位置到中心位置的映射偏移量。
+    """
     # print("center: ", center, "ee_pos: ", ee_pos, "action_scale: ", action_scale)
+    # 计算从中心位置到末端执行器位置的向量，并根据动作缩放因子进行缩放
     offset = np.array(center) - np.array(ee_pos) * action_scale
     return offset
 
@@ -48,10 +60,13 @@ class R_map:
 
 def euler_to_matrix(roll, pitch, yaw):
 
+    # 将欧拉角从度数转换为弧度
     roll = np.deg2rad(roll)
     pitch = np.deg2rad(pitch)
     yaw = np.deg2rad(yaw)
 
+    # 使用scipy库中的euler2mat函数将欧拉角转换为旋转矩阵
+    # 参数axes="sxyz"表示按照Z-Y-X的顺序进行旋转
     R_matrix = euler.euler2mat(roll, pitch, yaw, axes="sxyz")
     return R_matrix
 
@@ -59,17 +74,31 @@ def euler_to_matrix(roll, pitch, yaw):
 def clamp_point_to_sphere(
     point: Tuple[float, float, float], center: Tuple[float, float, float], radius: float
 ) -> Tuple[float, float, float]:
+    """
+    将一个点限制在一个球体的表面上。如果点在球体内，则返回该点本身；如果点在球体外，则将该点投影到球体表面上并返回。
 
+    参数:
+    point (Tuple[float, float, float]): 要限制的点的坐标。
+    center (Tuple[float, float, float]): 球体的中心坐标。
+    radius (float): 球体的半径。
+
+    返回:
+    Tuple[float, float, float]: 限制后的点的坐标。
+    """
+    # 将输入的点和中心坐标转换为numpy数组
     point = np.array(point)
     center = np.array(center)
 
+    # 计算点到球心的向量
     vector = point - center
 
+    # 计算点到球心的距离
     distance = np.linalg.norm(vector)
 
+    # 如果点在球体内，则返回该点本身
     if distance <= radius:
         return tuple(point)
-
+    # 如果点在球体外，则将该点投影到球体表面上并返回
     else:
         unit_vector = vector / distance
         clamped_point = center + unit_vector * radius

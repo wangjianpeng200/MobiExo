@@ -54,23 +54,44 @@ class Server:
                 wrist_cfg = self.cfg[f"{name}_wrist"]
                 self.wrist_init_rot[name] = wrist_cfg[f"{name}_wrist_init_rot"]
                 self.wrist_init_pos[name] = wrist_cfg[f"{name}_wrist_init_pos"]
-                self.center_l[name] = wrist_cfg[f"{name}_center"]
-                self.radius_l[name] = wrist_cfg[f"{name}_radius"]
+                self.center_l[name] = wrist_cfg[f"{name}_center"]    # 球心坐标
+                self.radius_l[name] = wrist_cfg[f"{name}_radius"]    # 球半径
     
     def init_server(self) -> None:
+        """
+        初始化gRPC服务器。
+
+        该方法创建一个gRPC服务器实例，将HandTrackingServicer添加到服务器中，并启动服务器。
+
+        参数:
+        无
+
+        返回:
+        无
+        """
+        # 创建一个gRPC服务器实例，使用线程池执行器，最大工作线程数为10
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+        # 创建一个HandTrackingServicer实例
         self.servicer = HandTrackingServicer()
+        # 将HandTrackingServicer添加到服务器中
         handtracking_pb2_grpc.add_HandTrackingServiceServicer_to_server(
             self.servicer, self.server
         )
+        # 为服务器添加一个不安全的端口，监听所有可用的网络接口，端口号为12345
         self.server.add_insecure_port("[::]:12345")
 
+        # 启动服务器
         self.server.start()
 
+        # 将头部的坐标系从YUP转换为ZUP，并存储在servicer的head属性中
         self.servicer.head = np.dot(YUP2ZUP_INV_2D, HEAD)
+        # 将右侧关键点的默认值存储在servicer的points_right属性中
         self.servicer.points_right[:] = default_keypoint
+        # 将左侧关键点的默认值存储在servicer的points_left属性中
         self.servicer.points_left[:] = default_keypoint
+        # 将右侧的变换矩阵初始化为单位矩阵，并存储在servicer的matrix_right属性中
         self.servicer.matrix_right = np.eye(4)
+        # 将左侧的变换矩阵初始化为单位矩阵，并存储在servicer的matrix_left属性中
         self.servicer.matrix_left = np.eye(4)
 
     def run(self) -> None:
