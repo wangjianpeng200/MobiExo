@@ -25,33 +25,6 @@ class KeyboardServer(Server):
         self.listener.daemon = True
         self.listener.start()
 
-    # def on_press(self, key):
-    #     # Left hand
-    #     if key == KeyCode(char='w'):
-    #         self.cur_ee_pos["left"][1] += self.dx
-    #         print(f"Pressed 'w': Moving left end effector up by {self.dx}")
-    #     if key == KeyCode(char='a'):
-    #         self.cur_ee_pos["left"][0] -= self.dx
-    #         print(f"Pressed 'a': Moving left end effector left by {self.dx}")
-    #     if key == KeyCode(char='s'):
-    #         self.cur_ee_pos["left"][1] -= self.dx
-    #         print(f"Pressed 's': Moving left end effector down by {self.dx}")
-    #     if key == KeyCode(char='d'):
-    #         self.cur_ee_pos["left"][0] += self.dx
-    #         print(f"Pressed 'd': Moving left end effector right by {self.dx}")
-    #     # Right hand
-    #     if key == Key.up:
-    #         self.cur_ee_pos["right"][1] += self.dx
-    #         print(f"Pressed up arrow: Moving right end effector up by {self.dx}")
-    #     if key == Key.left:
-    #         self.cur_ee_pos["right"][0] -= self.dx
-    #         print(f"Pressed left arrow: Moving right end effector left b y {self.dx}")
-    #     if key == Key.down:
-    #         self.cur_ee_pos["right"][1] -= self.dx
-    #         print(f"Pressed down arrow: Moving right end effector down by {self.dx}")
-    #     if key == Key.right:
-    #         self.cur_ee_pos["right"][0] += self.dx
-    #         print(f"Pressed right arrow: Moving right end effector right by {self.dx}")    
 
     def on_press(self, key):
         # Left hand
@@ -67,7 +40,14 @@ class KeyboardServer(Server):
         if key == KeyCode(char='d'):
             self.cur_ee_pos["left"][0] += self.dx
             print(f"Left hand position after 'd' press: {self.cur_ee_pos['left']}")
-        
+        if key == KeyCode(char='q'):
+            self.cur_ee_pos["left"][2] += self.dx
+            print(f"Left hand position after 'd' press: {self.cur_ee_pos['left']}")
+        if key == KeyCode(char='e'):
+            self.cur_ee_pos["left"][2] -= self.dx
+            print(f"Left hand position after 'd' press: {self.cur_ee_pos['left']}")
+      
+
         # Right hand
         if key == Key.up:
             self.cur_ee_pos["right"][1] += self.dx
@@ -81,26 +61,7 @@ class KeyboardServer(Server):
         if key == Key.right:
             self.cur_ee_pos["right"][0] += self.dx
             print(f"Right hand position after 'right' press: {self.cur_ee_pos['right']}")    
-    # def on_press(self, key):
-    #     # Left hand
-    #     if key == KeyCode(char='w'):
-    #         self.cur_ee_pos["left"][1] += self.dx
-    #     if key == KeyCode(char='a'):
-    #         self.cur_ee_pos["left"][0] -= self.dx
-    #     if key == KeyCode(char='s'):
-    #         self.cur_ee_pos["left"][1] -= self.dx
-    #     if key == KeyCode(char='d'):
-    #         self.cur_ee_pos["left"][0] += self.dx
-        
-    #     # Right hand
-    #     if key == Key.up:
-    #         self.cur_ee_pos["right"][1] += self.dx
-    #     if key == Key.left:
-    #         self.cur_ee_pos["right"][0] -= self.dx
-    #     if key == Key.down:
-    #         self.cur_ee_pos["right"][1] -= self.dx
-    #     if key == Key.right:
-    #         self.cur_ee_pos["right"][0] += self.dx
+
 
     def run(self) -> None:
         while True:
@@ -119,4 +80,4 @@ class KeyboardServer(Server):
 
             self.servicer.update_event.set()
             
-            time.sleep(0.1)
+            time.sleep(0.1)      

@@ -45,7 +45,7 @@ class Gen_72:
         self.pDll.RM_API_Init(72,0) 
         byteIP = bytes("192.168.1.18","gbk")
         self.nSocket = self.pDll.Arm_Socket_Start(byteIP, 8080, 200)
-        # print (self.nSocket)
+        print (self.nSocket)
 
         float_joint = ctypes.c_float*7
         self.left_joint_write = float_joint()
@@ -78,12 +78,12 @@ class Gen_72:
 
         #-----------------------------------机械臂,夹爪,控制模式，modbus初始化
         float_joint = ctypes.c_float * 7
-        joint_base = float_joint(*[-0.27377135, -0.74260074, 0.3113867 , -2.1312518,  0.21240002,  1.006088 ,2.0039316])
+        joint_base = float_joint(*[0.27377135, -0.74260074, -0.3113867 , -2.1312518,  -0.21240002,  1.006088 ,2.4039316])
         for i in range(7):
             joint_base[i]=math.degrees(joint_base[i])
-            # print(joint_base[i])
+            print(joint_base[i])
         ret=self.pDll.Movej_Cmd(self.nSocket, joint_base, 20, 1, 0)
-        # print('机械臂是否回到初始位置',ret)
+        print('机械臂是否回到初始位置',ret)
         #打开高速网络配置
         self.pDll.Set_High_Speed_Eth(self.nSocket,1,0)
         #设置末端工具接口电压为24v
@@ -96,21 +96,21 @@ class Gen_72:
     #---------------------------------------获取右机械臂和夹爪状态  
     def right_get(self,cmd: np.ndarray):
         right_joint_rad=cmd[9:16]
-        # print("right_joint_rad:",right_joint_rad)
+        print("right_joint_rad:",right_joint_rad)
         for i in range(7):
             self.right_joint[i]=math.degrees(right_joint_rad[i])
-        # print("right_joint:",self.right_joint)
+        print("right_joint:",self.right_joint)
         self.right_gripper_two=cmd[16:18]
-        # print("right_gripper:",self.right_gripper)
+        print("right_gripper:",self.right_gripper)
         
     #---------------------------------------获取左机械臂和夹爪状态
     def left_get(self,cmd: np.ndarray):
         left_joint_rad=cmd[0:7]
         for i in range(7):
             self.left_joint[i]=math.degrees(left_joint_rad[i])
-        # print("left_joint:",self.left_joint)
+        print("left_joint:",self.left_joint)
         self.left_gripper_two=cmd[7:9]
-        # print("left_gripper:",self.left_gripper)
+        print("left_gripper:",self.left_gripper)
 
     #---------------------------------------夹爪数据处理
     def process_gripper(self):
@@ -486,7 +486,7 @@ def main() -> None:
 
     teleoperator = ACETeleop(cfg, args.ip, debug=args.debug)
     simulator = Sim(cfg, print_freq=False, debug=args.debug)
-    gen72=Gen_72("192.168.1.18")
+    # gen72=Gen_72("192.168.1.18")
 
     try:
         while True:
@@ -495,9 +495,9 @@ def main() -> None:
                 simulator.step(cmd, np2tensor(latest, simulator.device))
             else:
                 cmd = teleoperator.step()
-                # print("Non-debug mode cmd:", cmd)
+                print("Non-debug mode cmd:", cmd)
                 simulator.step(cmd)
-                gen72.run_gen72(cmd)
+                # gen72.run_gen72(cmd)
     except KeyboardInterrupt:
         simulator.end()
         exit(0)

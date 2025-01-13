@@ -8,7 +8,7 @@ Stephen Brawner (brawner@gmail.com)
     <link name="base_link"/>
 
     <joint name="l_base_joint" type="fixed">
-        <origin xyz="0 0.35 0" rpy="0 0 0"/>
+        <origin xyz="0 0.1 0" rpy="-1.5708 0 0"/>
         <parent link="base_link"/>
         <child link="l_base_link"/>
     </joint>
@@ -502,7 +502,7 @@ Stephen Brawner (brawner@gmail.com)
         </visual>
         <collision>
             <geometry>
-                <mesh filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/franka/franka_description/meshes/collision/hand.stl" />
+                <mesh filename="../../franka/franka_description/meshes/collision/hand.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -532,12 +532,12 @@ Stephen Brawner (brawner@gmail.com)
     <link name="l_panda_leftfinger">
         <visual>
             <geometry>
-                <mesh filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/franka/franka_description/meshes/visual/finger.glb" />
+                <mesh filename="../../franka/franka_description/meshes/visual/finger.glb" />
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <mesh filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/franka/franka_description/meshes/collision/finger.stl" />
+                <mesh filename="../../franka/franka_description/meshes/collision/finger.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -551,13 +551,13 @@ Stephen Brawner (brawner@gmail.com)
         <visual>
             <origin rpy="0 0 3.14159265359" xyz="0 0 0" />
             <geometry>
-                <mesh filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/franka/franka_description/meshes/visual/finger.glb" />
+                <mesh filename="../../franka/franka_description/meshes/visual/finger.glb" />
             </geometry>
         </visual>
         <collision>
             <origin rpy="0 0 3.14159265359" xyz="0 0 0" />
             <geometry>
-                <mesh filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/franka/franka_description/meshes/collision/finger.stl" />
+                <mesh filename="../../franka/franka_description/meshes/collision/finger.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -568,7 +568,7 @@ Stephen Brawner (brawner@gmail.com)
     </link>
     #----------------------------------------------------------------------------------------------------------------------------------------------------
     <joint name="r_base_joint" type="fixed">
-        <origin xyz="0 -0.35 0" rpy="0 0 0"/>
+        <origin xyz="0 -0.1 0" rpy="1.5708 0 0"/>
         <parent link="base_link"/>
         <child link="r_base_link"/>
     </joint>
@@ -1057,12 +1057,12 @@ Stephen Brawner (brawner@gmail.com)
     <link name="r_panda_hand">
         <visual>
             <geometry>
-                <mesh filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/franka/franka_description/meshes/visual/hand.glb" />
+                <mesh filename="../../franka/franka_description/meshes/visual/hand.glb" />
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <mesh filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/franka/franka_description/meshes/collision/hand.stl" />
+                <mesh filename="../../franka/franka_description/meshes/collision/hand.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -1092,12 +1092,12 @@ Stephen Brawner (brawner@gmail.com)
     <link name="r_panda_leftfinger">
         <visual>
             <geometry>
-                <mesh filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/franka/franka_description/meshes/visual/finger.glb" />
+                <mesh filename="../../franka/franka_description/meshes/visual/finger.glb" />
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <mesh filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/franka/franka_description/meshes/collision/finger.stl" />
+                <mesh filename="../../franka/franka_description/meshes/collision/finger.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -1111,13 +1111,13 @@ Stephen Brawner (brawner@gmail.com)
         <visual>
             <origin rpy="0 0 3.14159265359" xyz="0 0 0" />
             <geometry>
-                <mesh filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/franka/franka_description/meshes/visual/finger.glb" />
+                <mesh filename="../../franka/franka_description/meshes/visual/finger.glb" />
             </geometry>
         </visual>
         <collision>
             <origin rpy="0 0 3.14159265359" xyz="0 0 0" />
             <geometry>
-                <mesh filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/franka/franka_description/meshes/collision/finger.stl" />
+                <mesh filename="../../franka/franka_description/meshes/collision/finger.stl" />
             </geometry>
         </collision>
         <inertial>

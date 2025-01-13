@@ -317,7 +317,7 @@ class ACEServer(Server):
                     )   #将坐标一个点限制在一个球体内
 
                     #这段代码的作用是将 self.wrist[name][2, 3] 的值限制在 0 到 0.3 之间。np.clip 是 NumPy 库中的一个函数，用于将数组中的值限制在指定的范围内。
-                    self.wrist[name][2, 3] = np.clip(self.wrist[name][2, 3], 0, 0.3)      #限制z轴的值在0到0.3之间
+                    self.wrist[name][2, 3] = np.clip(self.wrist[name][2, 3], 0, 0.2)      #限制z轴的值在0到0.3之间
 
                     #! need to fix
                     if (not self.initialized or not self.start) or (
@@ -343,9 +343,15 @@ class ACEServer(Server):
 # 总的来说，这段代码的作用是对 self.wrist[name] 进行两次矩阵乘法操作，分别是绕 Z 轴逆时针旋转 90 度和将 Y 轴向上的坐标系转换为 Z 轴向上的坐标系。
 
                     if self.is_ACE:
+                        print("变化前")
+                        print(f"腕部数据（{name}): {self.wrist[name]}")
                         self.wrist[name] = np.dot(R_z_90_ccw_pose, self.wrist[name])
-
+                        print("变化中")
+                        print(f"腕部数据（{name}): {self.wrist[name]}")
                     self.wrist[name] = np.dot(YUP2ZUP_INV_2D, self.wrist[name])
+                    print("变化后")
+                    print(f"腕部数据（{name}): {self.wrist[name]}")
+
 
                     if name == "left":
                         if self.mode == "mirror":

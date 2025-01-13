@@ -7,19 +7,7 @@ from dataclasses import dataclass, field
 
 
 def get_mapping_offset(center, ee_pos, action_scale):
-    """
-    计算从末端执行器位置到中心位置的映射偏移量。
-
-    参数:
-    center (np.ndarray): 目标中心位置的坐标。
-    ee_pos (np.ndarray): 末端执行器的当前位置坐标。
-    action_scale (float): 缩放因子，用于调整偏移量的大小。
-
-    返回:
-    np.ndarray: 计算得到的从末端执行器位置到中心位置的映射偏移量。
-    """
     # print("center: ", center, "ee_pos: ", ee_pos, "action_scale: ", action_scale)
-    # 计算从中心位置到末端执行器位置的向量，并根据动作缩放因子进行缩放
     offset = np.array(center) - np.array(ee_pos) * action_scale
     return offset
 
