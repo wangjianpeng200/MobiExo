@@ -1,6 +1,5 @@
 import numpy as np
 from pytransform3d.rotations import quaternion_from_matrix
-import socket
 
 # def avp_to_mediapipe(fingers: np.ndarray) -> np.ndarray:
 #     indices = np.array([0, 1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 23, 24])
@@ -47,21 +46,7 @@ class ACEInitializer:
 
         print(f"Initialization progress: {self.progress * 100:.2f}%")
         return self.initialized
-    
-    def send_start_message(self):
-        # 创建一个 UDP 套接字
-        udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        
-        # 定义本地地址和端口
-        local_address = ("127.0.0.1", 12345)
-        
-        # 发送 "start" 消息
-        message = "start".encode('utf-8')
-        udp_socket.sendto(message, local_address)
-        
-        # 关闭套接字
-        udp_socket.close()
-    
+
     def _process(
         self,
         left_wrist: np.ndarray,
@@ -103,7 +88,6 @@ class ACEInitializer:
         # 如果初始化进度达到或超过1，将初始化状态设置为True
         if self.progress >= 1:
             self.initialized = True
-            self.send_start_message()
 
     def _rotation_change(self, R1: np.ndarray, R2: np.ndarray) -> float:
         relative_R = np.dot(R2, R1.T)
