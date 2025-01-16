@@ -116,8 +116,8 @@ class Gen_72:
         self.right_get(cmd)
         self.left_get(cmd)
         self.process_gripper()
-        self.right_arm.rm_movej_canfd(self.right_joint,True)
-        self.left_arm.rm_movej_canfd(self.left_joint,True)
+        self.right_arm.rm_movej_canfd(self.right_joint,True, 0, 1, 50)
+        self.left_arm.rm_movej_canfd(self.left_joint,True, 0, 1, 50)
         self.threshold_gripprt(self.right_gripper,self.left_gripper)
     
     def __del__(self):
@@ -172,14 +172,14 @@ def main() -> None:
     if start==1:
         gen72=Gen_72("192.168.1.18") 
         time.sleep(1)
-        for _ in range(100):
+        for _ in range(10):
             cmd = teleoperator.step()
             print("cmd:", cmd)
         gen72.run_init(cmd)
-        time.sleep(2)
+        time.sleep(4)
         try:
             while True:
-                # start_time = time.time()  # 记录开始时间
+                start_time = time.time()  # 记录开始时间
 
                 if args.debug:
                     cmd, latest = teleoperator.step()
@@ -188,10 +188,10 @@ def main() -> None:
                     gen72.run(cmd)
                     # print("Non-debug mode cmd:", cmd)
 
-                # end_time = time.time()  # 记录结束时间
-                # frame_time = end_time - start_time
-                # frame_rate = 1.0 / frame_time if frame_time > 0 else float('inf')
-                # print(f"Frame Time: {frame_time:.6f} seconds, Frame Rate: {frame_rate:.2f} FPS")
+                end_time = time.time()  # 记录结束时间
+                frame_time = end_time - start_time
+                frame_rate = 1.0 / frame_time if frame_time > 0 else float('inf')
+                print(f"Frame Time: {frame_time:.6f} seconds, Frame Rate: {frame_rate:.2f} FPS")
         except KeyboardInterrupt:
             exit(0)
 
