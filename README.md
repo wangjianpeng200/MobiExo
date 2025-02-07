@@ -68,7 +68,6 @@ for Low-Cost Dexterous Teleoperation </h1>
 ```
 
 ## 电机组装与校准
-# 更新电机 ID
 安装 dynamixel_wizard。
 默认情况下，每个电机的 ID 为 1。为了使多个动力舵机能由同一个 U2D2 控制器板控制，每个动力舵机必须有一个唯一的 ID。ACE 有六个舵机，从基座到手腕，它们的 ID 应依次设置为 1 到 6。这个过程必须逐个电机进行。
 # 步骤：
@@ -81,31 +80,31 @@ for Low-Cost Dexterous Teleoperation </h1>
 
 ```DYNAMIXEL Wizard```软件安装后打开：
 
-![](./images/image-3.png)
+![](/images/image-3.png)
 
 点击图左上方齿轮图标，设置扫描参数如下：
 
-![](./images/image-4.png)
+![](/images/image-4.png)
 
 点击图左上方的放大镜图标进行扫描：
 
-![](./images/image-5.png)
+![](/images/image-5.png)
 
 根据接入顺序，可能是`/dev/ttyUSB0`或`/dev/ttyUSB1`，若扫描到结果如上图即成功。此窗口会自动关闭。
 
 点击中间如图所示：
 
-![](./images/image-6.png)
+![](/images/image-6.png)
 
 点击右侧栏ID选项，可设置ID。
 
-![](./images/image-7.png)
+![](/images/image-7.png)
 
 向下滑动滚轮，可看到`Save`，保存即可。
 依次操作，将两个机械臂分别进行1到6编号。
 最后两个机械臂接上，扫描一下：
 
-![](./images/image-8.png)
+![](/images/image-8.png)
 
 若得到如图所示效果，则配置成功。
 
@@ -128,8 +127,8 @@ for Low-Cost Dexterous Teleoperation </h1>
 ```python
   python -m ace_teleop.dynamixel.calibration.test_calibration --port /dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT8J0QI3-if00-port0 --type left
 ```
-# 注意：test_calibration 需要 sapien==3.0.0b0，这可能与 dex_retargeting==0.1.1 冲突。
-# 建议创建一个单独的环境以避免潜在错误。
+注意：test_calibration 需要 sapien==3.0.0b0，这可能与 dex_retargeting==0.1.1 冲突。
+建议创建一个单独的环境以避免潜在错误。
 
 ## 摄像头测试
 查找摄像头索引并测试摄像头帧率
@@ -147,6 +146,7 @@ for Low-Cost Dexterous Teleoperation </h1>
 在睿尔曼的机械臂操作界面内，将右臂的有线连接ip改为```192.168.1.19```
 
 ## 测试与运行
+分别在仿真和真实环境下进行测试
 # 仿真测试
 在python 3.8环境下进行仿真测试，测试穿戴设备是否能够正确控制仿真机械臂
 在一个终端中运行服务端
