@@ -144,6 +144,27 @@ for Low-Cost Dexterous Teleoperation </h1>
 
 ## 测试与运行
 分别在仿真和真实环境下进行测试
+# 使用键盘测试
+在python 3.8环境下进行仿真测试，测试环境是否可以启动仿真
+在一个终端中启动
+```python
+python3 scripts/start_server.py --config franka_gripper --keyboard
+```
+在另一个终端中运行仿真
+```python
+  python scripts/teleop_sim.py --config franka
+```
+# 单臂测试
+在python 3.8环境下进行仿真测试，测试穿戴设备是否能够使用单臂正确控制仿真机械臂
+首先在```ace_teleop/configs/server/single_demo_franka```中修改USB串口编号（在电机校准时查询的串口编号）
+在一个终端中运行服务端
+```python
+  python scripts/start_server.py --config single_demo_franka
+```
+在另一个终端中运行仿真
+```python
+  python scripts/teleop_sim.py --config franka
+```
 # 仿真测试
 在python 3.8环境下进行仿真测试，测试穿戴设备是否能够正确控制仿真机械臂
 在一个终端中运行服务端
