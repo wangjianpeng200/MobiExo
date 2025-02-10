@@ -102,11 +102,7 @@ for Low-Cost Dexterous Teleoperation </h1>
 
 向下滑动滚轮，可看到`Save`，保存即可。
 依次操作，将两个机械臂分别进行1到6编号。
-最后两个机械臂接上，扫描一下：
 
-![](/images/image-8.png)
-
-若得到如图所示效果，则配置成功。
 
 # 获取偏移量
 设置好电机 ID 后，你就可以连接到 ACE 硬件了。然而，每个电机都有其自身的关节偏移量，这会导致你的 ACE 硬件与 ACE URDF 之间存在差异。动力舵机具有对称的四孔图案，因此关节偏移量是 π/2 的倍数。为了解决这个问题，你可以使用以下代码来校准你的 ACE 硬件。
@@ -116,6 +112,7 @@ for Low-Cost Dexterous Teleoperation </h1>
 
 ![](./images/image-13.png)
 
+这里请注意当前配置的是左臂还是右臂
 ```python
   python3 -m ace_teleop.dynamixel.calibration.get_offset --port /dev/serial/by-id/usb-FTDI_USB**-**Serial_Converter_FT8J0QI3-if00-port0 --type left
 ```
