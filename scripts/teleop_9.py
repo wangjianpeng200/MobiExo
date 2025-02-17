@@ -108,7 +108,7 @@ class Gen_72:
         self.right_get(cmd)
         self.left_get(cmd)
         self.right_arm.rm_movej(self.right_joint, 17, 0, 0, 0)    # 右臂运动到初始位置
-        self.left_arm.rm_movej(self.left_joint, 17, 0, 0, 0)                     #左臂运动到初始位置
+        self.left_arm.rm_movej(self.left_joint, 17, 0, 0, 0)      # 左臂运动到初始位置
 
         
     #---------------------------------------运行
@@ -171,12 +171,12 @@ def main() -> None:
     start_receiver()
     if start==1:
         gen72=Gen_72("192.168.1.18") 
-        time.sleep(1)
-        for _ in range(10):
+        time.sleep(0.1)
+        for _ in range(3):
             cmd = teleoperator.step()
             print("cmd:", cmd)
         gen72.run_init(cmd)
-        time.sleep(4)
+        time.sleep(2)
         try:
             while True:
                 start_time = time.time()  # 记录开始时间

@@ -54,169 +54,139 @@ for Low-Cost Dexterous Teleoperation </h1>
 <img src="./src/sim_demo.webp" width="80%"/>
 </p>
 
-## Introduction
+## 程序框图
+![](/images/image-14.png)
 
-The repository contains all the software for **ACE**, which includes three main components: server, controller, and simulation. Additionally, we provide utilities to set up the hardware. Combined with ACE hardware, you can quickly teleoperate with various end-effectors and robots in the simulation environment or use commands from the controller to operate robots in the real world. See the ACE hardware repository for the STL files and hardware instructions for building your own <a href="https://github.com/ACETeleop/ACE_hardware">**ACE**</a>.
 
-### Key Components
-- **Server:** Accepts hand images and joint angles as inputs, and outputs the wrist pose and hand key points after mapping.
-- **Controller:** Processes inputs from the server and uses inverse kinematics (IK) to generate control commands.
-- **Simulation:** Receives commands and visualizes the actions within the simulation environment.
-
-### Supported Robots and End-Effectors 
-- **xArm** with **Ability Hand**
-- **Franka** with **Gripper**
-- **H1** with **Inspire Hand**
-- **GR-1** with **Gripper**
-
-Welcome to update and expand the list of supported robots and end-effectors!
-
-## Prepare:
-```python
-pip install -e .
+## 介绍
+该仓库包含了 ACE 的所有软件，主要包括三个组件：服务器、控制器和仿真。此外，我们还提供了用于设置硬件的实用工具。结合 ACE 硬件，你可以在仿真环境中快速使用各种末端执行器和机器人进行遥操作，或者使用控制器发出的指令在现实世界中操作机器人。有关 STL 文件和硬件搭建说明，请参阅 ACE 硬件仓库 ACE 以自行构建。
+# 关键组件
+服务器： 接收手部图像和关节角度作为输入，并在映射后输出手腕姿态和手部关键点。
+控制器： 处理来自服务器的输入，并使用逆运动学（IK）生成控制指令。
+仿真： 接收指令并在仿真环境中可视化操作。
+# 创建虚拟环境
+使用python3.8环境 只能使用仿真控制，无法控制真实机械臂。使用python 3.9环境只能控制真实机械臂，无法仿真控制。建议同时安装两种python的虚拟环境。
+```bash
+  pip install -e .
 ```
 
-## Teleop Workflow
-<p align="center">
-    <img src="./src/sys.png" width="80%">
-</p>
+## 电机组装与校准
+安装 dynamixel_wizard。
+默认情况下，每个电机的 ID 为 1。为了使多个动力舵机能由同一个 U2D2 控制器板控制，每个动力舵机必须有一个唯一的 ID。ACE 有六个舵机，从基座到手腕，它们的 ID 应依次设置为 1 到 6。这个过程必须逐个电机进行。
+# 步骤：
+1.将单个电机连接到控制器，并将控制器连接到计算机。
+2.打开 dynamixel wizard 并点击扫描以连接到电机。
+3.对于每个舵机，将电机 ID 地址从 1 更改为目标 ID（1 到 6）。
+4.对每个电机重复此过程，依次分配从 1 到 6 的唯一 ID。
 
-The system is easy to use with only three steps to control various end-effectors and robots.
+下载```DYNAMIXEL Wizard```软件，[下载链接在此处](https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_wizard2/)，**将一个舵机单独直接连上板子**
 
-1. **Calibrate the Hardware:** Follow the instructions to [calibrate](#calibration) the hardware.
-2. **Start teleop:** 
-   - [Start the server](#ace-server).
-   - If you need to control the robot in the [simulation](#simulation), simply run `teleop_sim.py`.
-   - If you need to control a [real robot](#ace-controller), modify `teleop_cmd` and connect it with the real robot control code.
+```DYNAMIXEL Wizard```软件安装后打开：
 
-**Note:** 
-1. The teleoperation system will automatically map rotation and position, then start after [initialization](#initialization). The initialization process begins when the hands are held still with fingers spread out flat.
-2. Server and controller need corresponding configs.
+![](/images/image-3.png)
 
-<p id="ace-server"></p>
+点击图左上方齿轮图标，设置扫描参数如下：
 
-## ACE Server (Get Input from ACE Hardware or Your Keyboard)
+![](/images/image-4.png)
 
-### Start Server
-If you just want to see how the code works, you can have fun with your keyboard:
-```python
-python3 scripts/start_server.py --config h1_inspire --keyboard
-```
-You can use `wasd` to control the left wrist and `↑←↓→` to control the right wrist after running the `teleop_sim` code (see below). Note: the control signal is sent from the server side, therefore the foreground window must be the terminal running the above script.
+点击图左上方的放大镜图标进行扫描：
 
-If you have a set of ACE teleoperation hardware, try:
-```python
-# for normal mode
-python3 scripts/start_server.py --config h1_inspire
+![](/images/image-5.png)
 
-# for mirror mode
-python3 scripts/start_server.py --config h1_inspire_mirror
+根据接入顺序，可能是`/dev/ttyUSB0`或`/dev/ttyUSB1`，若扫描到结果如上图即成功。此窗口会自动关闭。
 
-```
-<p id="ace-controller"></p>
+点击中间如图所示：
 
-## ACE Controller (Get Input from the server)
+![](/images/image-6.png)
 
-### Run Controller
-```python
-# used to get the command
-python scripts/teleop_cmd.py --config h1_inspire
-```
+点击右侧栏ID选项，可设置ID。
 
-<p id="simulation"></p>
+![](/images/image-7.png)
 
-## Simulation (Get input from the controller)
+向下滑动滚轮，可看到`Save`，保存即可。
+依次操作，将两个机械臂分别进行1到6编号。
+最后两个机械臂接上，扫描一下：
 
-### Running in Simulation
+![](/images/image-8.png)
 
-We provide the code for controlling robots in simulation. You can easily use the simulation to test the configuration before controlling the robot in the real world.
+若得到如图所示效果，则配置成功。
+
+# 获取偏移量
+设置好电机 ID 后，你就可以连接到 ACE 硬件了。然而，每个电机都有其自身的关节偏移量，这会导致你的 ACE 硬件与 ACE URDF 之间存在差异。动力舵机具有对称的四孔图案，因此关节偏移量是 π/2 的倍数。为了解决这个问题，你可以使用以下代码来校准你的 ACE 硬件。
+
+通过运行```ls /dev/serial/by-id```并查找以```usb-FTDI_USB**-**Serial_Converter ```开头的路径（在 Ubuntu 上）来找到你的 U2D2 Dynamixel 设备的端口 ID。
+将 ACE 硬件设置为下图所示的姿势，然后运行代码
+
+![](./images/image-13.png)
 
 ```python
-# Install isaacgym if you want to run the sim example.
-python scripts/teleop_sim.py --config h1_inspire
+  python3 -m ace_teleop.dynamixel.calibration.get_offset --port /dev/serial/by-id/usb-FTDI_USB**-**Serial_Converter_FT8J0QI3-if00-port0 --type left
 ```
 
-<p id="calibration"></p>
-
-## Calibration
-
-### Update Motor IDs
-
-Install the [dynamixel_wizard](https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_wizard2/).
-
-By default, each motor has the ID 1. In order for multiple dynamixels to be controlled by the same U2D2 controller board, each dynamixel must have a unique ID. ACE has six servos, from the base to the wrist, and their IDs should be set from 1 to 6. This process must be done one motor at a time.
-
-**Steps:**
- - Connect a single motor to the controller and connect the controller to the computer.
- - Open the dynamixel wizard and click scan to connect to the motor.
- - Change the motor ID address from 1 to the target ID (1 to 6) for each servo.
- - Repeat the process for each motor, assigning a unique ID from 1 to 6.
-
-### Get Offset
-
-After setting the motor IDs, you can connect to the ACE hardware. However, each motor has its own joint offset, leading to discrepancies between your ACE hardware and the ACE URDF. Dynamixels have a symmetric 4-hole pattern, resulting in joint offsets that are multiples of π/2. To address this, you can use the following code to calibrate your ACE hardware. 
-
-- **Port:** Find the port ID of your U2D2 Dynamixel device by running `ls /dev/serial/by-id` and looking for the path that starts with `usb-FTDI_USB__-__Serial_Converter` (on Ubuntu). On Mac, look in /dev/ for the device that begins with `cu.usbserial`.
-
-- **Type:** Specify which arm you are calibrating.
-
+# 姿态校准
+获取偏移量后，进入 ace_teleop/dynamixel/calibration/config.py 并在 PORT_CONFIG_MAP 中添加一个 DynamixelRobotConfig。注意：你只需从文件中复制一个现有配置，并根据需要修改 port 和 joint_offsets 即可。
+测试校准
+校准完成后，你可以使用以下命令测试结果。你应该看到现实世界中的 ACE 硬件的行为与仿真中的行为相同。
 ```python
-# Set the ACE hardware to the pose shown in the following picture, then run the code
-python3 -m ace_teleop.dynamixel.calibration.get_offset --port /dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT8J0QI3-if00-port0 --type left
+  python -m ace_teleop.dynamixel.calibration.test_calibration --port /dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT8J0QI3-if00-port0 --type left
 ```
+注意：test_calibration 需要 sapien==3.0.0b0，这可能与 dex_retargeting==0.1.1 冲突。
+建议创建一个单独的环境以避免潜在错误。
 
-<p align="center">
-<img src="./src/calibration.png" width="80%"/>
-</p>
-
-After getting the offset, go to `ace_teleop/dynamixel/calibration/config.py` and add a `DynamixelRobotConfig` to the `PORT_CONFIG_MAP`. Note: You only need to copy an existing config from the file and modify the `port` and `joint_offsets` as required.
-
-### Test Calibration
-
-After calibration, you can test the result with the following command. You should see the ACE hardware in the real world behave the same way as it does in the simulation.
-
+## 摄像头测试
+查找摄像头索引并测试摄像头帧率
+此代码将查找所有网络摄像头并显示帧率。
 ```python
-# Note: test_calibration requires sapien==3.0.0b0, which may conflict with dex_retargeting==0.1.1.
-# It's recommended to create a separate environment to avoid potential errors.
-python -m ace_teleop.dynamixel.calibration.test_calibration --port /dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT8J0QI3-if00-port0 --type left
+  python3 -m ace_teleop.tools.find_webcam
+```
+获取摄像头索引后，进入 ace_teleop/configs/server 并更改相应 yml 文件中的 cam_num。
+
+## 真实机械臂ip修改
+请使用以太网线连接机械臂控制器和电脑，将以电脑太网口的IPV4配置为192.169.1.10。打开浏览器，若使用有线连接，则网址输入 192.168.1.18 进入登录页。若可进入登录界面，则连接正常。
+
+![alt text](images/image-9.png)
+
+在睿尔曼的机械臂操作界面内，将右臂的有线连接ip改为```192.168.1.19```
+
+## 测试与运行
+分别在仿真和真实环境下进行测试，在测试钱需要先赋予USB串口权限
+```bash
+  sudo chmod 666 /dev/ttyUSB*
 ```
 
-After testing the calibration, go to `ace_teleop/configs/server` and change the `port` in the corresponding `yml` file.
-
-### Find Cam index and test the Cam FPS
-This code will find all the webcams and show the fps.
+# 仿真测试
+在python 3.8环境下进行仿真测试，测试穿戴设备是否能够正确控制仿真机械臂
+在一个终端中运行服务端
 ```python
-# press "k" to show next cam
-python3 -m ace_teleop.tools.find_webcam
+  python scripts/start_server.py --config franka_gripper
 ```
-After getting the webcam index, go to `ace_teleop/configs/server` and change the `cam_num` in the corresponding `yml` file.下载
-With default configurations and auto mapping, you can easily control the provided robots. The following details may help you get the full use of **ACE** and better handle different tasks.
+在一个终端中运行仿真
+```python
+  python scripts/teleop_sim.py --config franka
+```
 
-<p id="initialization"></p>
+# 真实机械臂测试
+在python 3.9环境下进行仿真测试，测试穿戴设备是否能够正确控制仿真机械臂
+在一个终端中运行服务端
+```python
+  python scripts/start_server.py --config franka_gripper
+```
+在一个终端中运行仿真
+```python
+  python scripts/teleop_9.py --config franka
+```
+注意：在使用双臂机械臂时，需要打开双手保持不动进行关节的初始化，在初始化过程种可以看见机械臂初始化的过程。初始化完成后机械臂会移动到初始位置，然后开始操控。
 
-### Initialization
 
-- **Bimanual Configs:** The following pose will start initialization. If the operator's hands are not held still or if the fingers are not spread out flat, the initialization process will restart.
+## 调试
 
-<p align="center">
-<img src="./src/init.png" width="80%"/>
-</p>
+# 调整机械臂初始位置以及缩放因子
+在```ace_teleop/configs/server/franka_gripper.yaml```中，将```scale```进行调整，系数越大运动机械臂运动幅度越大。
 
-- **Single Arm Configs:** Press "p" to initialize.
-
-### Mapping Controls
-
-- **r:** Remap the current human rotation to the set robot rotation.
-- **p:** Remap the current human position to the set robot position.
-- **m:** First press: the robot will keep still. Second press: remap the current human pose to the current robot pose.
-- **x:** First press: lock x-axis movement. Second press: unlock x-axis movement.
-- **y:** First press: lock y-axis movement. Second press: unlock y-axis movement.
-- **z:** First press: lock z-axis movement. Second press: unlock z-axis movement.
-
-### Configs
-
-To better control the robot, go to `ace_teleop/configs/server` and modify `pos_scale`, `roll_scale`, `pitch_scale`, `yaw_scale` in the corresponding `yml` file.
+# 调节机械臂运动平滑度
+在```scripts/teleop_cmd.py```中，将```self.right_arm.rm_movej_canfd(self.right_joint,True, 0, 1, 35)/self.left_arm.rm_movej_canfd(self.left_joint,True, 0, 1, 35)```进行调整，系数越大运动机械臂运动越平滑，但是延迟越大
 
 
 ## Acknowlegments
+
 This code base refers a lot to many previous amazing works like [BunnyVisionPro](https://github.com/Dingry/bunny_teleop_server), [OpenTeleVision](https://github.com/OpenTeleVision/TeleVision), [GELLO](https://github.com/wuphilipp/gello_software). Also, the codes are built on some superior public project, such as [pinocchio](https://github.com/stack-of-tasks/pinocchio) and [dex-retargeting](https://github.com/dexsuite/dex-retargeting).

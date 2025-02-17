@@ -6,10 +6,10 @@ robot_cfg:
 
   mode: normal
 
-  pos_scale: 1.4
-  roll_scale: 1.4
-  pitch_scale: 1.4
-  yaw_scale: 1.4
+  pos_scale: 1.4    //坐标移动的缩放因子
+  roll_scale: 1.4   //旋转角度的缩放因子
+  pitch_scale: 1.4  //俯仰角度的缩放因子
+  yaw_scale: 1.4    //偏航角度的缩放因子
 
   roll_limit: [-3, 3]
   pitch_limit: [-3, 3]
