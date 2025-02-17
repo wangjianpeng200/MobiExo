@@ -54,6 +54,10 @@ for Low-Cost Dexterous Teleoperation </h1>
 <img src="./src/sim_demo.webp" width="80%"/>
 </p>
 
+## 程序框图
+![](/images/image-14.png)
+
+
 ## 介绍
 该仓库包含了 ACE 的所有软件，主要包括三个组件：服务器、控制器和仿真。此外，我们还提供了用于设置硬件的实用工具。结合 ACE 硬件，你可以在仿真环境中快速使用各种末端执行器和机器人进行遥操作，或者使用控制器发出的指令在现实世界中操作机器人。有关 STL 文件和硬件搭建说明，请参阅 ACE 硬件仓库 ACE 以自行构建。
 # 关键组件
@@ -64,7 +68,6 @@ for Low-Cost Dexterous Teleoperation </h1>
 使用python3.8环境 只能使用仿真控制，无法控制真实机械臂。使用python 3.9环境只能控制真实机械臂，无法仿真控制。建议同时安装两种python的虚拟环境。
 ```bash
   pip install -e .
-  pip install Robotic_Arm
 ```
 
 ## 电机组装与校准
@@ -102,7 +105,11 @@ for Low-Cost Dexterous Teleoperation </h1>
 
 向下滑动滚轮，可看到`Save`，保存即可。
 依次操作，将两个机械臂分别进行1到6编号。
+最后两个机械臂接上，扫描一下：
 
+![](/images/image-8.png)
+
+若得到如图所示效果，则配置成功。
 
 # 获取偏移量
 设置好电机 ID 后，你就可以连接到 ACE 硬件了。然而，每个电机都有其自身的关节偏移量，这会导致你的 ACE 硬件与 ACE URDF 之间存在差异。动力舵机具有对称的四孔图案，因此关节偏移量是 π/2 的倍数。为了解决这个问题，你可以使用以下代码来校准你的 ACE 硬件。
@@ -112,7 +119,6 @@ for Low-Cost Dexterous Teleoperation </h1>
 
 ![](./images/image-13.png)
 
-这里请注意当前配置的是左臂还是右臂
 ```python
   python3 -m ace_teleop.dynamixel.calibration.get_offset --port /dev/serial/by-id/usb-FTDI_USB**-**Serial_Converter_FT8J0QI3-if00-port0 --type left
 ```
@@ -144,27 +150,6 @@ for Low-Cost Dexterous Teleoperation </h1>
 
 ## 测试与运行
 分别在仿真和真实环境下进行测试
-# 使用键盘测试
-在python 3.8环境下进行仿真测试，测试环境是否可以启动仿真
-在一个终端中启动
-```python
-python3 scripts/start_server.py --config franka_gripper --keyboard
-```
-在另一个终端中运行仿真
-```python
-  python scripts/teleop_sim.py --config franka
-```
-# 单臂测试
-在python 3.8环境下进行仿真测试，测试穿戴设备是否能够使用单臂正确控制仿真机械臂
-首先在```ace_teleop/configs/server/single_demo_franka```中修改USB串口编号（在电机校准时查询的串口编号）
-在一个终端中运行服务端
-```python
-  python scripts/start_server.py --config single_demo_franka
-```
-在另一个终端中运行仿真
-```python
-  python scripts/teleop_sim.py --config franka
-```
 # 仿真测试
 在python 3.8环境下进行仿真测试，测试穿戴设备是否能够正确控制仿真机械臂
 在一个终端中运行服务端
@@ -184,8 +169,10 @@ python3 scripts/start_server.py --config franka_gripper --keyboard
 在一个终端中运行仿真
 
 ```python
-  python scripts/teleop_cmd.py --config franka
+  python scripts/teleop_cmd_py3.9.py --config franka
 ```
+
+需要打开双手保持不动进行关节的初始化，在初始化过程种可以看见机械臂初始化的过程。
 ## Acknowlegments
 
 This code base refers a lot to many previous amazing works like [BunnyVisionPro](https://github.com/Dingry/bunny_teleop_server), [OpenTeleVision](https://github.com/OpenTeleVision/TeleVision), [GELLO](https://github.com/wuphilipp/gello_software). Also, the codes are built on some superior public project, such as [pinocchio](https://github.com/stack-of-tasks/pinocchio) and [dex-retargeting](https://github.com/dexsuite/dex-retargeting).
