@@ -8,6 +8,7 @@ import time
 import yaml
 from copy import deepcopy
 from typing import Dict, Any
+import ctypes
 
 from avp_stream.utils.isaac_utils import *
 from avp_stream.utils.se3_utils import *
@@ -15,6 +16,158 @@ from avp_stream.utils.trn_constants import *
 
 import ace_teleop
 from ace_teleop.control.teleop import ACETeleop
+
+
+def quaternion_to_rotation_matrix(quat):
+    """
+    将四元数转换为旋转矩阵
+    参数:
+    quat (gymapi.Quat): 四元数
+
+    返回:
+    np.ndarray: 3x3 旋转矩阵
+    """
+    w, x, y, z = quat.w, quat.x, quat.y, quat.z
+    rotation_matrix = np.array([
+        [1 - 2*y**2 - 2*z**2, 2*x*y - 2*z*w, 2*x*z + 2*y*w],
+        [2*x*y + 2*z*w, 1 - 2*x**2 - 2*z**2, 2*y*z - 2*x*w],
+        [2*x*z - 2*y*w, 2*y*z + 2*x*w, 1 - 2*x**2 - 2*y**2]
+    ])
+    return rotation_matrix
+
+FLAG_FOLLOW=0
+
+class Gen_72:
+    def __init__(self, ip):
+
+        #------------------------------------变量初始化
+        self.ip = ip
+        self.left_joint=[0.0]*7
+        self.left_gripper_two=[0.0]*2
+        self.right_joint=[0.0]*7
+        self.right_gripper_two=[0.0]*2
+        self.left_basejoint=[0.0]*7 #左臂初始位置
+        self.right_basejoint=[0.0]*7#右臂初始位置
+        self.right_gripper=[0.0]
+        self.left_gripper=[0.0]
+        self.right_gipflag=0
+        self.left_gipflag=0
+
+
+
+        #-------------------------------------API初始化以及socket连接
+        dllPath = '/home/s402/lerobot/one/lerobot-opi-main_gen72/lerobot-gen72/lerobot/common/robot_devices/robots/libRM_Base.so'
+        self.pDll = ctypes.cdll.LoadLibrary(dllPath)
+        #  连接机械臂
+        self.pDll.RM_API_Init(72,0) 
+        byteIP = bytes("192.168.1.18","gbk")
+        self.nSocket = self.pDll.Arm_Socket_Start(byteIP, 8080, 200)
+        print (self.nSocket)
+
+        float_joint = ctypes.c_float*7
+        self.left_joint_write = float_joint()
+        self.right_joint_write = float_joint()
+
+        #gen72API
+        self.pDll.Movej_Cmd.argtypes = (ctypes.c_int, ctypes.c_float * 7, ctypes.c_byte, ctypes.c_float, ctypes.c_bool)
+        self.pDll.Movej_Cmd.restype = ctypes.c_int
+        self.pDll.Movej_CANFD.argtypes= (ctypes.c_int, ctypes.c_float * 7, ctypes.c_bool, ctypes.c_float)
+        self.pDll.Movej_CANFD.restype = ctypes.c_int
+        self.pDll.Get_Joint_Degree.argtypes = (ctypes.c_int, ctypes.c_float * 7)
+        self.pDll.Get_Joint_Degree.restype = ctypes.c_int
+        #self.pDll.Get_Gripper_State.argtypes = (ctypes.c_int, ctypes.POINTER(GripperState))
+        self.pDll.Get_Gripper_State.restype = ctypes.c_int
+        self.pDll.Set_Gripper_Position.argtypes = (ctypes.c_int, ctypes.c_int, ctypes.c_bool, ctypes.c_int)
+        self.pDll.Set_Gripper_Position.restype = ctypes.c_int
+        self.pDll.Write_Single_Register.argtypes = (ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int,ctypes.c_bool)
+        self.pDll.Write_Single_Register.restype = ctypes.c_int
+        self.pDll.Set_Modbus_Mode.argtypes = (ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_bool)
+        self.pDll.Set_Modbus_Mode.restype = ctypes.c_int
+        self.pDll.Set_Tool_Voltage.argtypes = (ctypes.c_int, ctypes.c_int, ctypes.c_bool)
+        self.pDll.Set_Tool_Voltage.restype = ctypes.c_int
+        self.pDll.Close_Modbus_Mode.argtypes = (ctypes.c_int, ctypes.c_int, ctypes.c_bool)
+        self.pDll.Close_Modbus_Mode.restype = ctypes.c_int
+        self.pDll.Get_Read_Holding_Registers.argtypes = (ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.POINTER(ctypes.c_int))
+        self.pDll.Get_Read_Holding_Registers.restype=ctypes.c_int
+        self.pDll.Set_High_Speed_Eth.argtypes = (ctypes.c_int, ctypes.c_byte, ctypes.c_bool)
+        self.pDll.Set_High_Speed_Eth.restype = ctypes.c_int
+
+
+        #-----------------------------------机械臂,夹爪,控制模式，modbus初始化
+        float_joint = ctypes.c_float * 7
+        joint_base = float_joint(*[0.27377135, -0.74260074, -0.3113867 , -2.1312518,  -0.21240002,  1.006088 ,2.4039316])
+        for i in range(7):
+            joint_base[i]=math.degrees(joint_base[i])
+            print(joint_base[i])
+        ret=self.pDll.Movej_Cmd(self.nSocket, joint_base, 20, 1, 0)
+        print('机械臂是否回到初始位置',ret)
+        #打开高速网络配置
+        self.pDll.Set_High_Speed_Eth(self.nSocket,1,0)
+        #设置末端工具接口电压为24v
+        self.pDll.Set_Tool_Voltage(self.nSocket,3,1)
+        #打开modbus模式
+        self.pDll.Set_Modbus_Mode(self.nSocket,1,115200,2,2,1)
+        #初始化夹爪为打开状态
+        self.pDll.Write_Single_Register(self.nSocket,1,40000,100,1,1)
+
+    #---------------------------------------获取右机械臂和夹爪状态  
+    def right_get(self,cmd: np.ndarray):
+        right_joint_rad=cmd[9:16]
+        print("right_joint_rad:",right_joint_rad)
+        for i in range(7):
+            self.right_joint[i]=math.degrees(right_joint_rad[i])
+        print("right_joint:",self.right_joint)
+        self.right_gripper_two=cmd[16:18]
+        print("right_gripper:",self.right_gripper)
+        
+    #---------------------------------------获取左机械臂和夹爪状态
+    def left_get(self,cmd: np.ndarray):
+        left_joint_rad=cmd[0:7]
+        for i in range(7):
+            self.left_joint[i]=math.degrees(left_joint_rad[i])
+        print("left_joint:",self.left_joint)
+        self.left_gripper_two=cmd[7:9]
+        print("left_gripper:",self.left_gripper)
+
+    #---------------------------------------夹爪数据处理
+    def process_gripper(self):
+        self.right_gripper=(self.right_gripper_two[0]/0.04)*100
+        # self.left_gripper=(self.left_gripper_two[0]/0.04)*100
+
+    #---------------------------------------夹爪阈值判断
+    def threshold_gripprt(self,right_gripper:np.ndarray,left_gripper:np.ndarray):
+        if (right_gripper <21 ) and (self.right_gipflag == 1):
+            self.pDll.Write_Single_Register(self.nSocket, 1, 40000, 10 , 1, 1)
+            self.right_gipflag=0
+        #状态为闭合，且需要张开夹爪
+        if (right_gripper>79) and (self.right_gipflag== 0):
+            self.pDll.Write_Single_Register(self.nSocket, 1, 40000, 100, 1, 1)
+            self.right_gipflag=1
+
+        # if (left_gripper <21 ) and (self.left_gipflag == 1):
+        #     self.pDll.Write_Single_Register(self.nSocket, 1, 40000, 10 , 1, 1)
+        #     self.left_gipflag=0
+        # #状态为闭合，且需要张开夹爪
+        # if (left_girpper>79) and (self.left_gipflag== 0):
+        #     self.pDll.Write_Single_Register(self.nSocket, 1, 40000, 100, 1, 1)
+        #     self.left_gipflag=1
+
+    #---------------------------------------运行
+    def run_gen72(self,cmd: np.ndarray):
+        self.right_get(cmd)
+        # self.left_get(cmd)
+        self.process_gripper()
+        for i in range(7):
+            self.right_joint_write[i] = self.right_joint[i]
+        self.pDll.Movej_CANFD(self.nSocket,self.right_joint_write,FLAG_FOLLOW,0)
+        # self.right_arm.rm_movej_canfd(self.right_joint, False)
+        # self.left_arm.rm_movej_canfd(self.left_jopint, False)
+        self.threshold_gripprt(self.right_gripper,self.left_gripper)
+        
+    def __del__(self):
+        self.pDll.Arm_Socket_Close(self.nSocket)
+        self.pDll.Close_Modbus_Mode(self.nSocket,1,1)
+
 
 def load_config(config_file_name: str) -> Dict[str, Any]:
     robot_config_path = (
@@ -111,7 +264,7 @@ class Sim:
         self.gym.prepare_sim(self.sim)
         if self.debug:
             self.initialize_tensors()
-
+    
     def load_axis(self, size: str, root: Path) -> Any:
         return load_axis(self.gym, self.sim, self.device, size, str(root))
 
@@ -222,15 +375,16 @@ class Sim:
         cam_target = gymapi.Vec3(0, 0, 1)
         self.gym.viewer_camera_look_at(self.viewer, None, cam_pos, cam_target)
 
+
+
     def step(
-        self, cmd: np.ndarray, transformation: Dict[str, torch.Tensor] = None
-    ) -> None:
-        # 如果设置了打印频率，则记录开始时间
+    self, cmd: np.ndarray, transformation: Dict[str, torch.Tensor] = None
+) -> None:
+    # 如果设置了打印频率，则记录开始时间
         if self.print_freq:
             start = time.time()
 
         # 设置机器人自由度（DOF）
-        # Set robot DOF
         states = np.zeros(cmd.shape, dtype=gymapi.DofState.dtype)
         states["pos"] = cmd
         self.gym.set_actor_dof_states(
@@ -238,7 +392,6 @@ class Sim:
         )
 
         # 模拟物理步骤
-        # Step the physics
         self.gym.simulate(self.sim)
 
         # 如果开启了调试模式，刷新张量
@@ -264,6 +417,17 @@ class Sim:
         self.gym.step_graphics(self.sim)
         self.gym.draw_viewer(self.viewer, self.sim, True)
         self.gym.sync_frame_time(self.sim)
+
+        # 获取第七个关节的姿态旋转矩阵
+        end_effector_index = 9  # 假设第七个关节的索引为 6，根据实际情况调整
+        end_effector_pose = self.gym.get_actor_rigid_body_states(self.env, self.robot_handle, gymapi.STATE_POS)[end_effector_index]
+
+        # 提取四元数并转换为旋转矩阵
+        quat = end_effector_pose['pose']['r']
+        quat = gymapi.Quat(quat[0], quat[1], quat[2], quat[3])
+        rotation_matrix = quaternion_to_rotation_matrix(quat)
+        print(f"End Effector Rotation Matrix for Joint 7:")
+        print(rotation_matrix)
 
         # 如果设置了打印频率，则计算并打印频率
         if self.print_freq:
@@ -350,6 +514,7 @@ def main() -> None:
 
     teleoperator = ACETeleop(cfg, args.ip, debug=args.debug)
     simulator = Sim(cfg, print_freq=False, debug=args.debug)
+    # gen72=Gen_72("192.168.1.18")
 
     try:
         while True:
@@ -358,8 +523,10 @@ def main() -> None:
                 simulator.step(cmd, np2tensor(latest, simulator.device))
             else:
                 cmd = teleoperator.step()
-                print("Non-debug mode cmd:", cmd)
+                # print("Non-debug mode cmd:", cmd)
                 simulator.step(cmd)
+                
+                # gen72.run_gen72(cmd)
     except KeyboardInterrupt:
         simulator.end()
         exit(0)

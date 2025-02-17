@@ -45,68 +45,26 @@ class DynamixelRobotConfig:
 
 
 PORT_CONFIG_MAP = {
-    #! right agent fah
-    "/dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT8ISG7I-if00-port0": DynamixelRobotConfig(
-        joint_ids=(1, 2, 3, 4, 5, 6),
-        joint_offsets=(
-            2 * np.pi / 2,
-            -2 * np.pi / 2,
-            2 * np.pi / 2,
-            3 * np.pi / 2,
-            4 * np.pi / 2,
-            2 * np.pi / 2,
-        ),
-        joint_signs=(-1, -1, -1, -1, -1, -1),
-        gripper_config=None,
-    ),
-    #! left agent fah
-    "/dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT8J0QI3-if00-port0": DynamixelRobotConfig(
-        joint_ids=(1, 2, 3, 4, 5, 6),
-        joint_offsets=(
-            1 * np.pi / 2,
-            4 * np.pi / 2,
-            1 * np.pi / 2,
-            2 * np.pi / 2,
-            2 * np.pi / 2,
-            2 * np.pi / 2,
-        ),
-        joint_signs=(-1, -1, -1, -1, -1, -1),
-        gripper_config=None,
-    ),
-    #! right agent jacob
-    "/dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT89FKBF-if00-port0": DynamixelRobotConfig(
-        joint_ids=(1, 2, 3, 4, 5, 6),
-        joint_offsets=(
-        4*np.pi/2, 
-        3*np.pi/2, 
-        3*np.pi/2, 
-        2*np.pi/2, 
-        3*np.pi/2, 
-        4*np.pi/2
-        ),
-        joint_signs=(-1, -1, -1, -1, -1, -1),
-        gripper_config=None,
-    ),
-    #! left agent jacob
-    "/dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT8ISW9S-if00-port0": DynamixelRobotConfig(
-        joint_ids=(1, 2, 3, 4, 5, 6),
-        joint_offsets=(
-            3*np.pi/2, 
-            4*np.pi/2, 
-            2*np.pi/2, 
-            3*np.pi/2, 
-            0*np.pi/2, 
-            4*np.pi/2
-        ),
-        joint_signs=(-1, -1, -1, -1, -1, -1),
-        gripper_config=None,
-    ),
      #! right agent jacob
     "/dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT9HDF61-if00-port0": DynamixelRobotConfig(
         joint_ids=(1, 2, 3, 4, 5, 6),
         joint_offsets=(
             2*np.pi/2, 
             0*np.pi/2, 
+            2*np.pi/2, 
+            2*np.pi/2, 
+            2*np.pi/2, 
+            4*np.pi/2
+        ),
+        joint_signs=(-1, -1, -1, -1, -1, -1),
+        gripper_config=None,
+    ),
+    #left agent jacob
+    "/dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT9HDF53-if00-port0": DynamixelRobotConfig(
+        joint_ids=(1, 2, 3, 4, 5, 6),
+        joint_offsets=(
+            2*np.pi/2, 
+            2*np.pi/2, 
             2*np.pi/2, 
             2*np.pi/2, 
             2*np.pi/2, 

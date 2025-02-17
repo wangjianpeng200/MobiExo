@@ -5,7 +5,7 @@ robot_cfg:
 
   mode: mirror
 
-  pos_scale: 1
+  pos_scale: 0.1
   roll_scale: 2.0
   pitch_scale: 2.0
   yaw_scale: 2.0
@@ -20,13 +20,13 @@ robot_cfg:
     left_wrist_init_rot: [[ 0,  0, 1], [ 1,  0,  0], [ 0,  1,  0]]
     left_wrist_init_pos: [-0.2, -0.2, 0.0]
     left_center: [0.2, 0.15, 0.2]
-    left_radius: 0.23
+    left_radius: 0.3
 
   right_wrist:
     right_wrist_init_rot: [[ 0,  0,  1], [ -1,  0,  0], [ 0,  -1,  0]]
     right_wrist_init_pos: [0.2, -0.2, 0.0]
     right_center: [-0.2, 0.15, 0.2]
-    right_radius: 0.23
+    right_radius: 0.3
 
   left_agent:
     dynamixel_cfg:

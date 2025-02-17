@@ -35,7 +35,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/base_link.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/base_link.STL" />
             </geometry>
             <material
                 name="">
@@ -49,7 +49,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/base_link.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/base_link.STL" />
             </geometry>
         </collision>
     </link>
@@ -75,7 +75,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link1.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link1.STL" />
             </geometry>
             <material
                 name="">
@@ -89,7 +89,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link1.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link1.STL" />
             </geometry>
         </collision>
     </link>
@@ -133,7 +133,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link2.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link2.STL" />
             </geometry>
             <material
                 name="">
@@ -147,7 +147,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link2.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link2.STL" />
             </geometry>
         </collision>
     </link>
@@ -191,7 +191,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link3.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link3.STL" />
             </geometry>
             <material
                 name="">
@@ -205,7 +205,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link3.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link3.STL" />
             </geometry>
         </collision>
     </link>
@@ -249,7 +249,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link4.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link4.STL" />
             </geometry>
             <material
                 name="">
@@ -263,7 +263,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link4.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link4.STL" />
             </geometry>
         </collision>
     </link>
@@ -307,7 +307,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link5.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link5.STL" />
             </geometry>
             <material
                 name="">
@@ -321,7 +321,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link5.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link5.STL" />
             </geometry>
         </collision>
     </link>
@@ -365,7 +365,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link6.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link6.STL" />
             </geometry>
             <material
                 name="">
@@ -379,7 +379,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link6.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link6.STL" />
             </geometry>
         </collision>
     </link>
@@ -423,7 +423,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link7.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link7.STL" />
             </geometry>
             <material
                 name="">
@@ -437,7 +437,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link7.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link7.STL" />
             </geometry>
         </collision>
     </link>
@@ -497,7 +497,7 @@ Stephen Brawner (brawner@gmail.com)
     <link name="l_panda_hand">
         <visual>
             <geometry>
-                <mesh filename="../../franka/franka_description/meshes/visual/hand.glb" />
+                <mesh filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/franka/franka_description/meshes/visual/hand.glb" />
             </geometry>
         </visual>
         <collision>
@@ -595,7 +595,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/base_link.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/base_link.STL" />
             </geometry>
             <material
                 name="">
@@ -609,7 +609,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/base_link.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/base_link.STL" />
             </geometry>
         </collision>
     </link>
@@ -635,7 +635,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link1.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link1.STL" />
             </geometry>
             <material
                 name="">
@@ -649,7 +649,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link1.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link1.STL" />
             </geometry>
         </collision>
     </link>
@@ -693,7 +693,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link2.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link2.STL" />
             </geometry>
             <material
                 name="">
@@ -707,7 +707,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link2.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link2.STL" />
             </geometry>
         </collision>
     </link>
@@ -751,7 +751,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link3.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link3.STL" />
             </geometry>
             <material
                 name="">
@@ -765,7 +765,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link3.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link3.STL" />
             </geometry>
         </collision>
     </link>
@@ -809,7 +809,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link4.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link4.STL" />
             </geometry>
             <material
                 name="">
@@ -823,7 +823,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link4.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link4.STL" />
             </geometry>
         </collision>
     </link>
@@ -867,7 +867,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link5.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link5.STL" />
             </geometry>
             <material
                 name="">
@@ -881,7 +881,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link5.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link5.STL" />
             </geometry>
         </collision>
     </link>
@@ -925,7 +925,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link6.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link6.STL" />
             </geometry>
             <material
                 name="">
@@ -939,7 +939,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link6.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link6.STL" />
             </geometry>
         </collision>
     </link>
@@ -983,7 +983,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link7.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link7.STL" />
             </geometry>
             <material
                 name="">
@@ -997,7 +997,7 @@ Stephen Brawner (brawner@gmail.com)
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                    filename="../meshes/Link7.STL" />
+                    filename="/home/s402/ACE/ACETeleop-main/ace_teleop/assets/gen_72_b_description/meshes/Link7.STL" />
             </geometry>
         </collision>
     </link>

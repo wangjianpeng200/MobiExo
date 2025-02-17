@@ -1,132 +1,3 @@
-# robot_cfg:
-#   name: franka_gripper
-
-#   is_ACE: True
-
-#   mode: normal
-
-#   pos_scale: 1.5
-#   roll_scale: 2.0
-#   pitch_scale: 2.0
-#   yaw_scale: 2.0
-
-#   roll_limit: [-3, 3]
-#   pitch_limit: [-3, 3]
-#   yaw_limit: [-3, 3]
-
-#   roll_offset: 20
-
-#   left_wrist:
-#     left_wrist_init_rot: [[ 0,  0, -1], [ 1,  0,  0], [ 0,  -1,  0]] 
-#     left_wrist_init_pos: [-0.5, 0.3, 0.3]
-#     left_center: [-0.5, 0.3, 0.3]
-#     left_radius: 0.3
-
-#   right_wrist:
-#     right_wrist_init_rot: [[ 0,  0,  -1], [ -1,  0,  0], [ 0,  1,  0]]
-#     right_wrist_init_pos: [0.5, 0.3, 0.3]
-#     right_center: [0.5, 0.3, 0.3]
-#     right_radius: 0.3
-
-#   left_agent:
-#     dynamixel_cfg:
-#       port: /dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT8J0QI3-if00-port0
-#       urdf: left_arm/robot.urdf
-#       ee_link_name: ee_c
-#     hand_cfg:
-#       cam_num: 0
-#       hand_type: Left
-
-#   right_agent:
-#     dynamixel_cfg:
-#       port: /dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT8ISG7I-if00-port0
-#       urdf: right_arm/robot.urdf
-#       ee_link_name: ee_c
-#     hand_cfg:
-#       cam_num: 2
-#       hand_type: Right
-
-
-
-
-# robot_cfg:
-#   name: franka_gripper
-
-#   is_ACE: True
-
-#   mode: normal
-
-#   pos_scale: 2
-#   roll_scale: 2.0
-#   pitch_scale: 2.0
-#   yaw_scale: 2.0
-
-#   roll_limit: [-3, 3]
-#   pitch_limit: [-3, 3]
-#   yaw_limit: [-3, 3]
-
-#   roll_offset: 20
-
-#   # left_wrist:
-#   #   left_wrist_init_rot: [[ 0,  0,  -1], [ -1,  0,  0], [ 0,  1,  0]] 
-#   #   left_wrist_init_pos: [-0.753, 0.191, 0.117]
-#   #   left_center: [-0.753, 0.191, 0.117]
-#   #   left_radius: 0.2
-
-#   # right_wrist:
-#   #   right_wrist_init_rot: [[ 0,  0,  -1], [ -1,  0,  0], [ 0,  1,  0]]
-#   #   right_wrist_init_pos: [0.5, 0.3, 0.3]
-#   #   right_center: [0.5, 0.3, 0.3]
-#   #   right_radius: 0.3
-
-#   # left_wrist:
-#   #   left_wrist_init_rot: [[ 0,  0, -1], [ 1,  0,  0], [ 0,  -1,  0]] 
-#   #   left_wrist_init_pos: [-0.5, 0.3, 0.3]
-#   #   left_center: [-0.5, 0.3, 0.3]
-#   #   left_radius: 0.3
-
-#   # right_wrist:
-#   #   right_wrist_init_rot: [[ 0,  0,  -1], [ -1,  0,  0], [ 0,  1,  0]]
-#   #   right_wrist_init_pos: [0.5, 0.3, 0.3]
-#   #   right_center: [0.5, 0.3, 0.3]
-#   #   right_radius: 0.3
-
-#   left_wrist:
-#     left_wrist_init_rot: [[-0.24613998 ,0.96672967 ,-0.06963371], [0.96870006 ,0.24775365 ,0.01543782], [0.0321762 ,-0.06365431, -0.99745317]]
-#     # left_wrist_init_pos: [-0.753, 0.191, 0.100]
-#     # left_center: [-0.753, 0.191, 0.100]
-#     left_wrist_init_pos: [-0.67, 0.21, 0.100]
-#     left_center: [-0.67, 0.21, 0.100]
-#     left_radius: 0.2
-
-#   right_wrist:
-#     right_wrist_init_rot: [[ 0,  0,  -1], [ -1,  0,  0], [ 0,  1,  0]]
-#     rightwrist_init_pos: [0.67, 0.21, 0.100]
-#     right_center: [0.67, 0.21, 0.100]
-#     right_radius: 0.2
-
-
-#   left_agent:
-#     dynamixel_cfg:
-#       # port: /dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT8J0QI3-if00-port0
-#       port: /dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT9HDF53-if00-port0
-#       urdf: left_arm/robot.urdf
-#       ee_link_name: ee_c
-#     hand_cfg:
-#       cam_num: 0
-#       hand_type: Left
-
-#   right_agent:
-#     dynamixel_cfg:
-#       # port: /dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT8ISG7I-if00-port0
-#       port: /dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT9HDF61-if00-port0
-#       urdf: right_arm/robot.urdf
-#       ee_link_name: ee_c
-#     hand_cfg:
-#       cam_num: 4
-#       hand_type: Right
-
-
 
 robot_cfg:
   name: franka_gripper
@@ -183,7 +54,6 @@ robot_cfg:
 
   left_agent:
     dynamixel_cfg:
-      # port: /dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT8J0QI3-if00-port0
       port: /dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT9HDF53-if00-port0
       urdf: left_arm/robot.urdf
       ee_link_name: ee_c
@@ -193,12 +63,11 @@ robot_cfg:
 
   right_agent:
     dynamixel_cfg:
-      # port: /dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT8ISG7I-if00-port0
       port: /dev/serial/by-id/usb-FTDI_USB__-__Serial_Converter_FT9HDF61-if00-port0
       urdf: right_arm/robot.urdf
       ee_link_name: ee_c
     hand_cfg:
-      cam_num: 0
+      cam_num: 2
       hand_type: Right
 
 

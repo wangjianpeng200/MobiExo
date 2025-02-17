@@ -13,6 +13,7 @@ class KeyboardServer(Server):
         self.cur_finger_joint_pos = {}
         self.cur_ee_pos = self.wrist_init_pos
         self.cur_ee_rot = self.wrist_init_rot
+        print(self.cur_ee_rot)
 
         for name in ["left", "right"]:
             self.wrist[name] = np.eye(4)
@@ -23,8 +24,7 @@ class KeyboardServer(Server):
         self.listener = Listener(
             on_press=self.on_press)
         self.listener.daemon = True
-        self.listener.start()
-
+        self.listener.start()  
 
     def on_press(self, key):
         # Left hand
@@ -46,8 +46,20 @@ class KeyboardServer(Server):
         if key == KeyCode(char='e'):
             self.cur_ee_pos["left"][2] -= self.dx
             print(f"Left hand position after 'd' press: {self.cur_ee_pos['left']}")
-      
-
+        # if key == KeyCode(char='r'):
+        #     self.cur_ee_rot["left"][0] += self.dx
+        # if key == KeyCode(char='f'):
+        #     self.cur_ee_rot["left"][0] += self.dx
+        # if key == KeyCode(char='t'):
+        #     self.cur_ee_rot["left"][1] += self.dx
+        # if key == KeyCode(char='g'):
+        #     self.cur_ee_rot["left"][1] += self.dx
+        # if key == KeyCode(char='y'):
+        #     self.cur_ee_rot["left"][2] += self.dx
+        # if key == KeyCode(char='h'):
+        #     self.cur_ee_rot["left"][2] += self.dx
+        
+        
         # Right hand
         if key == Key.up:
             self.cur_ee_pos["right"][1] += self.dx
@@ -61,7 +73,6 @@ class KeyboardServer(Server):
         if key == Key.right:
             self.cur_ee_pos["right"][0] += self.dx
             print(f"Right hand position after 'right' press: {self.cur_ee_pos['right']}")    
-
 
     def run(self) -> None:
         while True:
@@ -80,4 +91,4 @@ class KeyboardServer(Server):
 
             self.servicer.update_event.set()
             
-            time.sleep(0.1)      
+            time.sleep(0.1)

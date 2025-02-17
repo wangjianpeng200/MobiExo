@@ -107,8 +107,8 @@ class Gen_72:
     def run_init(self,cmd: np.ndarray):
         self.right_get(cmd)
         self.left_get(cmd)
-        self.right_arm.rm_movej(self.right_joint, 30, 0, 0, 0)    # 右臂运动到初始位置
-        self.left_arm.rm_movej(self.left_joint, 30, 0, 0, 0)                     #左臂运动到初始位置
+        self.right_arm.rm_movej(self.right_joint, 17, 0, 0, 0)    # 右臂运动到初始位置
+        self.left_arm.rm_movej(self.left_joint, 17, 0, 0, 0)                     #左臂运动到初始位置
 
         
     #---------------------------------------运行
@@ -116,8 +116,8 @@ class Gen_72:
         self.right_get(cmd)
         self.left_get(cmd)
         self.process_gripper()
-        self.right_arm.rm_movej_canfd(self.right_joint,True, 0, 1, 50)
-        self.left_arm.rm_movej_canfd(self.left_joint,True, 0, 1, 50)
+        self.right_arm.rm_movej_canfd(self.right_joint,True, 0, 1, 35)
+        self.left_arm.rm_movej_canfd(self.left_joint,True, 0, 1, 35)
         self.threshold_gripprt(self.right_gripper,self.left_gripper)
     
     def __del__(self):
