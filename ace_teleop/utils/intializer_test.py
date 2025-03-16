@@ -21,6 +21,8 @@ class ACEInitializer:
         right_wrist: np.ndarray,
         left_fingers: np.ndarray,
         right_fingers: np.ndarray,
+        left_gripper: float,
+        right_gripper: float,
     ) -> bool:
         # right_fingers = avp_to_mediapipe(right_fingers)
         # left_fingers = avp_to_mediapipe(left_fingers)
@@ -28,7 +30,7 @@ class ACEInitializer:
         #如果没有初始化则开始初始化
         if not self.initialized:
         #调用初始化的函数
-            self._process(left_wrist, left_fingers, right_wrist, right_fingers)
+            self._process(left_wrist, left_fingers, right_wrist, right_fingers, left_gripper, right_gripper)
 
         print(f"Initialization progress: {self.progress * 100:.2f}%")
         return self.initialized
@@ -50,15 +52,12 @@ class ACEInitializer:
         left_joints: np.ndarray,
         right_wrist: np.ndarray,
         right_joints: np.ndarray,
+        left_value: float,
+        right_value: float,
     ) -> None:
         if self.progress > 0:
-            left_continue = self._is_continue(
-                left_wrist, left_joints, self.left_wrist_list[-1]
-            )
-            right_continue = self._is_continue(
-                right_wrist, right_joints, self.right_wrist_list[-1]
-            )
-            if not (left_continue and right_continue):
+            if not (left_value<1 and right_value<1):
+                self._reset()
                 self._reset()
 
         self._update_buffer(left_wrist, right_wrist)
@@ -111,5 +110,5 @@ class ACEInitializer:
 
     def _update_buffer(self, left_wrist: np.ndarray, right_wrist: np.ndarray) -> None:
         self.progress += self.step
-        self.left_wrist_list.append(left_wrist)
-        self.right_wrist_list.append(right_wrist)
+        # self.left_wrist_list.append(left_wrist)
+        # self.right_wrist_list.append(right_wrist)

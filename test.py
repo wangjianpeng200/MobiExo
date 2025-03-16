@@ -7,11 +7,11 @@ import math
 import time
 import socket
 import threading
-import keyboard  # 导入 keyboard 模块
 
 import ace_teleop
 from ace_teleop.control.teleop import ACETeleop
-# from Robotic_Arm.rm_robot_interface import *
+from Robotic_Arm.rm_robot_interface import *
+from pynput import keyboard
 
 start = 1
 
@@ -29,76 +29,50 @@ class Gen_72:
         self.left_gripper = [0.0]
         self.right_gipflag = 0
         self.left_gipflag = 0
-        self.data = [0.0] * 33
-        self.episode = 0
+        self.cur_data = [0.0] * 32
+        self.episode_num = 0
         self.recording = False
-        self.recorded_data = []
+        self.lock = threading.Lock()
 
-        # -------------------------------------API初始化以及socket连接
+        #-------------------------------------API初始化以及socket连接
+        # 创建机械臂对象,三线程
         self.right_arm = RoboticArm(rm_thread_mode_e.RM_TRIPLE_MODE_E)
         self.left_arm = RoboticArm()
         right_handle = self.right_arm.rm_create_robot_arm("192.168.1.18", 8080)
-        left_handle = self.left_arm.rm_create_robot_arm("192.168.1.19", 8080)
-        self.right_arm.rm_set_arm_run_mode(1)
-        self.left_arm.rm_set_arm_run_mode(1)
+        left_handl = self.left_arm.rm_create_robot_arm("192.168.1.19", 8080)
+        self.right_arm.rm_set_arm_run_mode(1)  # 右臂设置为仿真模式
+        self.left_arm.rm_set_arm_run_mode(1)  # 左臂设置为仿真模式
 
         #-----------------------------------机械臂,夹爪,控制模式，modbus初始化
-        self.right_arm.rm_set_tool_voltage(3)
+        self.right_arm.rm_set_tool_voltage(3)  # 末端工具电压设置为24v
         self.left_arm.rm_set_tool_voltage(3)
         for i in range(7):
             self.right_basejoint[i] = math.degrees(self.right_basejoint[i])
         for i in range(7):
             self.left_basejoint[i] = math.degrees(self.left_basejoint[i])
 
-        self.right_arm.rm_set_modbus_mode(1, 115200, 2)
-        self.left_arm.rm_set_modbus_mode(1, 115200, 2)
+        self.right_arm.rm_set_modbus_mode(1, 115200, 2)  # modbus初始化
+        self.left_arm.rm_set_modbus_mode(1, 1115200, 2)
 
         self.right_write_params = rm_peripheral_read_write_params_t(1, 40000, 1)
         self.left_write_params = rm_peripheral_read_write_params_t(1, 40000, 1)
 
-        self.right_arm.rm_write_single_register(self.right_write_params, 100)
+        self.right_arm.rm_write_single_register(self.right_write_params, 100)  # 设置modbus写入参数，打开夹爪
         self.left_arm.rm_write_single_register(self.left_write_params, 100)
-        time.sleep(1)
-
-
-    def listen_keyboard(self):
-        while True:
-            event = keyboard.read_event()  # 获取键盘事件
-            if event.event_type == keyboard.KEY_DOWN and event.name == 'z':
-                self.send_data[-1] += 1
-                self.episode += 1
-                self.recording = True
-                self.recorded_data = []  # 清空之前的记录
-                print(f"检测到 z 键按下，计数器：{self.send_data[-1]}，开始记录 episode {self.episode}")
-
-    def record_data(self):
-        while True:
-            if self.recording:
-                timestamp = time.time()
-                self.recorded_data.append((timestamp, self.send_data.copy()))
-                time.sleep(0.02)  # 每 20 毫秒记录一次数据，相当于 50 FPS
-
-    def save_data(self):
-        while True:
-            if self.recording and len(self.recorded_data) > 0:
-                filename = f"episode_{self.episode}.txt"
-                with open(filename, 'w') as f:
-                    for timestamp, data in self.recorded_data:
-                        f.write(f"{timestamp}: {data}\n")
-                self.recording = False
-                print(f"数据已保存到 {filename}")
+        time.sleep(2)
 
     #---------------------------------------获取机械臂状态
     def right_arm_state_func(self, data):
         print("Current right arm pose: ", data.waypoint.to_dict())
         for i in range(7):
-            self.send_data[i] = data.waypoint.joint_angles[i]
+            self.cur_data[i] = data.waypoint.joint_angles[i]
 
     def left_arm_state_func(self, data):
         print("Current left arm pose: ", data.waypoint.to_dict())
         for i in range(7):
-            self.send_data[i + 8] = data.waypoint.joint_angles[i]
+            self.cur_data[i + 8] = data.waypoint.joint_angles[i]
 
+    #---------------------------------------夹爪状态回调
     def arm_state_func(self):
         custom = rm_udp_custom_config_t()
         custom.joint_speed = 0
@@ -151,41 +125,55 @@ class Gen_72:
     def run_init(self, cmd: np.ndarray):
         self.right_get(cmd)
         self.left_get(cmd)
-        self.right_arm.rm_movej(self.right_joint, 17, 0, 0, 0)
-        self.left_arm.rm_movej(self.left_joint, 17, 0, 0, 0)
-        # 启动 UDP 发送线程
-        self.udp_thread = threading.Thread(target=self.send_udp_data)
-        self.udp_thread.daemon = True
-        self.udp_thread.start()
-        # 启动键盘监听线程
-        self.keyboard_thread = threading.Thread(target=self.listen_keyboard)
-        self.keyboard_thread.daemon = True
-        self.keyboard_thread.start()
-        # 启动数据记录线程
-        self.record_thread = threading.Thread(target=self.record_data)
-        self.record_thread.daemon = True
-        self.record_thread.start()
-        # 启动数据保存线程
-        self.save_thread = threading.Thread(target=self.save_data)
-        self.save_thread.daemon = True
-        self.save_thread.start()
+        self.right_arm.rm_movej(self.right_joint, 20, 0, 0, 0)  # 右臂运动到初始位置
+        self.left_arm.rm_movej(self.left_joint, 20, 0, 0, 0)  # 左臂运动到初始位置
 
-    # #---------------------------------------运行
+    #---------------------------------------运行
     def run(self, cmd: np.ndarray):
         self.right_get(cmd)
         self.left_get(cmd)
         self.process_gripper()
-        self.right_arm.rm_movej_canfd(self.right_joint, True, 0, 1, 35)
-        self.left_arm.rm_movej_canfd(self.left_joint, True, 0, 1, 35)
+        self.right_arm.rm_movej_canfd(self.right_joint, True, 0, 1, 40)
+        self.left_arm.rm_movej_canfd(self.left_joint, True, 0, 1, 40)
         self.threshold_gripprt(self.right_gripper, self.left_gripper)
-        self.send_data[17:] = cmd.tolist()
+        with self.lock:
+            self.cur_data[18:-1] = cmd
+
+    def record_data(self):
+        while self.recording:
+            timestamp = time.time()
+            with self.lock:
+                data = self.cur_data.copy()
+                episode_num = self.episode_num
+            with open(f"episode_{episode_num}.txt", "a") as f:
+                f.write(f"{timestamp}, {data}\n")
+            time.sleep(1 / 50)  # 50 FPS
+
+    def start_recording(self):
+        self.recording = True
+        self.recording_thread = threading.Thread(target=self.record_data)
+        self.recording_thread.start()
+
+    def stop_recording(self):
+        self.recording = False
+        self.recording_thread.join()
 
     def __del__(self):
+        self.stop_recording()
         self.left_arm.rm_delete_robot_arm()
         self.right_arm.rm_delete_robot_arm()
 
+def on_press(key, gen72):
+    try:
+        if key.char == 'z':
+            with gen72.lock:
+                gen72.episode_num += 1
+                print(f"Episode number increased to {gen72.episode_num}")
+    except AttributeError:
+        pass
 
 def start_receiver():
+    # 创建一个 UDP 套接字
     udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     local_address = ("127.0.0.1", 12345)
     udp_socket.bind(local_address)
@@ -193,10 +181,12 @@ def start_receiver():
     while True:
         data, addr = udp_socket.recvfrom(1024)
         message = data.decode('utf-8')
+        # 检查是否为 "start" 消息
         if message == "start":
             start = 1
             print(f"Received start message from {addr}, start is set to {start}")
             break
+    # 关闭套接字
     udp_socket.close()
 
 def load_config(config_file_name: str) -> Dict[str, Any]:
@@ -209,6 +199,7 @@ def load_config(config_file_name: str) -> Dict[str, Any]:
     return cfg
 
 def main() -> None:
+    # Parse arguments
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--config",
@@ -224,32 +215,36 @@ def main() -> None:
     cfg = load_config(config_file_name)
 
     teleoperator = ACETeleop(cfg, args.ip, debug=args.debug)
-    # start_receiver()
-    # if start == 1:
-    gen72 = Gen_72("192.168.1.18")
-    time.sleep(0.1)
-    for _ in range(3):
-        cmd = teleoperator.step()
-        print("cmd:", cmd)
-    gen72.run_init(cmd)
-    time.sleep(1)
-    try:
-        while True:
-            start_time = time.time()  # 记录开始时间
+    start_receiver()
+    if start == 1:
+        gen72 = Gen_72("192.168.1.18")
+        gen72.start_recording()
+        listener = keyboard.Listener(on_press=lambda key: on_press(key, gen72))
+        listener.start()
+        time.sleep(1)
+        for _ in range(10):
+            cmd = teleoperator.step()
+            print("cmd:", cmd)
+        gen72.run_init(cmd)
+        time.sleep(2)
+        try:
+            while True:
+                start_time = time.time()  # 记录开始时间
 
-            if args.debug:
-                cmd, latest = teleoperator.step()
-            else:
-                cmd = teleoperator.step()
-                gen72.run(cmd)
-                # print("Non-debug mode cmd:", cmd)
+                if args.debug:
+                    cmd, latest = teleoperator.step()
+                else:
+                    cmd = teleoperator.step()
+                    gen72.run(cmd)
+                    # print("Non-debug mode cmd:", cmd)
 
-            end_time = time.time()  # 记录结束时间
-            frame_time = end_time - start_time
-            frame_rate = 1.0 / frame_time if frame_time > 0 else float('inf')
-            # print(f"Frame Time: {frame_time:.6f} seconds, Frame Rate: {frame_rate:.2f} FPS")
-    except KeyboardInterrupt:
-        exit(0)
+                end_time = time.time()  # 记录结束时间
+                frame_time = end_time - start_time
+                frame_rate = 1.0 / frame_time if frame_time > 0 else float('inf')
+                print(f"Frame Time: {frame_time:.6f} seconds, Frame Rate: {frame_rate:.2f} FPS")
+        except KeyboardInterrupt:
+            gen72.stop_recording()
+            exit(0)
 
 if __name__ == "__main__":
     main()

@@ -56,6 +56,7 @@ class ACEServer(Server):
                 self.process[name].start()
 
             self.wrist[name] = None
+            
 
         if not self.enable_agent["left"] and not self.enable_agent["right"]:
             raise ValueError("No agent is enabled")
@@ -330,6 +331,8 @@ class ACEServer(Server):
                         if self.warming_step < self.warming:
                             self.warming_step += 1
                             print(f"Warming:{self.warming_step/self.warming:.2f}")
+
+                            
                     # print("初始化完成")
                     if self.is_ACE:
                         # print("变化前")

@@ -24,3 +24,6 @@ class DynamixelAgent(Agent):
 
     def get_joints(self) -> np.ndarray:
         return self._robot.get_joint_state()
+    
+    def get_giper(self) -> np.ndarray:
+        return 

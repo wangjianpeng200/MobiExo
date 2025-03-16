@@ -43,6 +43,7 @@ class AgentProcess(Process):
 
         ret, frame = self.cap.read()
 
+
         fingers = hand_pos(ret, frame, self.detector)
 
         if fingers is not None:
@@ -60,6 +61,7 @@ class AgentProcess(Process):
                 else:
                     fingers = np.dot(fingers, R_y_90_cw_rot)
                     fingers = np.dot(fingers, R_x_90_ccw_rot)
+
         self.res_queue.put([wrist, fingers, frame])
 
     def run(self) -> None:

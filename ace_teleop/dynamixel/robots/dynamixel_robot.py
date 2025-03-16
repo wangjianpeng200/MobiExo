@@ -91,6 +91,7 @@ class DynamixelRobot(Robot):
 
     def get_joint_state(self) -> np.ndarray:
         pos = (self._driver.get_joints() - self._joint_offsets) * self._joint_signs
+        print("get joint state            : ", [f"{x:.3f}" for x in pos])
         assert len(pos) == self.num_dofs
 
         if self.gripper_open_close is not None:

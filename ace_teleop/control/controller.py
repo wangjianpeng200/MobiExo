@@ -148,7 +148,8 @@ class ACEController:
 
         left_fingertip_pos = self.left_fingertip_pos_filter.next(left_fingertip_pos)
         right_fingertip_pos = self.right_fingertip_pos_filter.next(right_fingertip_pos)
-        
+        print()
+
         #根据self.ee_type（末端执行器类型，可以是"hand"或"gripper"），采取不同的处理方式
         if self.ee_type == "hand":
             left_ee_qpos = self.left_retargeting.retarget(
