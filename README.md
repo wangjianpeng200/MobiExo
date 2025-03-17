@@ -1,62 +1,59 @@
-<h1 align="center"> ACE: A Cross-platform Visual-Exoskeletons
-for Low-Cost Dexterous Teleoperation </h1>
+<h1 align="center"> MobiExo: GPS-SLAM Fusion for Seamless Indoor-Outdoor Mobile
+Manipulation with Hand-Foot Coordination </h1>
 
-<p align="center">
-    <a href="https://aaronyang1223.github.io/" style="font-size: 20px;">
-        Shiqi Yang
-    </a>
-    ·
-    <a href="https://minghuanliu.com" style="font-size: 20px;">
-        Minghuan Liu
-    </a>
-    ·
-    <a href="https://yzqin.github.io" style="font-size: 20px;">
-        Yuzhe Qin
-    </a>
-    ·
-    <a href="https://dingry.github.io" style="font-size: 20px;">
-        Runyu Ding
-    </a>
-    ·
-    <a href="https://ace-teleop.github.io" style="font-size: 20px;">
-        Jialong Li
-    </a>
-    <br>
-    <a href="https://chengxuxin.github.io" style="font-size: 20px;">
-        Xuxin Cheng
-    </a>
-    ·
-    <a href="https://rchalyang.github.io" style="font-size: 20px;">
-        Ruihan Yang
-    </a>
-    ·
-    <a href="https://www.cs.cmu.edu/~shayi/" style="font-size: 20px;">
-        Sha Yi
-    </a>
-    ·
-    <a href="https://xiaolonw.github.io" style="font-size: 20px;">
-        Xiaolong Wang
-    </a>
-</p>
+## Remote系统总览
+![overview](doc/IntelligentDrive.png)
 
-<p align="center">
-    <img src="./src/UCSanDiegoLogo-BlueGold.png" height="50">
-</p>
+## 安装向导
+推荐在Ubuntu16.04下使用<br>
+1.安装ROS Kinetic桌面完整版,Kinetic为Ubuntu 16.04下的ROS版本名称，若当前使用其他版本的Ubuntu，请注意选择相应版本<br>
+请按照官方教程安装：[http://wiki.ros.org/cn/kinetic/Installation/Ubuntu](http://wiki.ros.org/cn/kinetic/Installation/Ubuntu)     
+2.安装依赖
+```shell
+sudo apt-get install libpcap-dev  
+sudo apt-get install ros-$ROS_DISTRO-tf2    
+sudo apt-get install ros-$ROS_DISTRO-geographic-msgs
+sudo apt-get install ros-$ROS_DISTRO-tf2-sensor-msgs
+```
+若要编译图像相关部分还需安装<br>
+相机驱动Spinnaker<br>
+caffe-ssd<br>
+或者切换代码分支到except_vision，该分支中移除了图像相关部分的代码
+```shell
+git checkout except_vision
+```
+3.添加工程目录到环境变量
+```shell
+export SEED_HOME=放置代码的目录/Seed
+```
+example:
+```shell
+export SEED_HOME=/home/sushold/Desktop/workspace/Seed
+```
+该语句仅对当前终端有效，若要永久生效可将此语句添加到~/.bashrc中。  
+4.编译
+```shell
+cd $SEED_HOME
+catkin_make
+```
 
-<h3 align="center"> CoRL 2024 </h3>
+#### ubuntu下c++连接postgresql数据库
+```
+法1：sudo apt-get install libpqxx-dev
+```
+法2：
+```
+wget http://pqxx.org/download/software/libpqxx/libpqxx-4.0.tar.gz
+tar xvfz libpqxx-4.0.tar.gz
+cd libpqxx-4.0
+./configure
+make
+sudo make install
+```
 
-<p align="center">
-<h3 align="center"><a href="https://ace-teleop.github.io/">Website</a> | <a href="http://arxiv.org/abs/2408.11805">arXiv</a> | <a href="https://github.com/ACETeleop/ACE_hardware">Hardware</a> </h3>
-  <div align="center"></div>
-</p>
 
-<p align="center">
-<img src="./src/sim_demo.webp" width="80%"/>
-</p>
-
-## 程序框图
+## ACE程序框图
 ![](/images/image-14.png)
-
 
 ## 介绍
 该仓库包含了 ACE 的所有软件，主要包括三个组件：服务器、控制器和仿真。此外，我们还提供了用于设置硬件的实用工具。结合 ACE 硬件，你可以在仿真环境中快速使用各种末端执行器和机器人进行遥操作，或者使用控制器发出的指令在现实世界中操作机器人。有关 STL 文件和硬件搭建说明，请参阅 ACE 硬件仓库 ACE 以自行构建。

@@ -1,0 +1,15 @@
+camera_params:
+  image_width_: 640
+  image_height_: 480
+  focal_length:
+    x: 1671.2971794  # 相机的焦距在图像的 x 轴上的分量
+    y: 1569.6210468  #相机的焦距在图像的 y 轴上的分量
+  principal_point:
+    x: 962.7838  #图像的主点在 x 轴上的位置
+    y: 657.7136  #图像的主点在 y 轴上的位置
+  cam_frame: cam
+camera_name: "camera"
+
+#| fx  0   cx |
+#|  0  fy  cy |
+#|  0   0   1 |

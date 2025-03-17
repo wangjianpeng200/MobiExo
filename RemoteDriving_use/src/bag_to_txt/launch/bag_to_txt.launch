@@ -1,0 +1,10 @@
+<launch>
+    <node
+        pkg="bag_to_txt"
+        type="bag_to_txt"
+        name="bag_to_txt"
+        output="screen"
+        cwd="node">
+     
+    </node>
+</launch>

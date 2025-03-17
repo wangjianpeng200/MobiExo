@@ -1,0 +1,12 @@
+<launch>
+    <param	name="uart_num"	type="string" value="/dev/ttyUSB0"	/>
+
+    <node
+        pkg="cgi_navigation"
+        type="cgi_navigation_node"
+        name="cgi_navigation_node"
+        output="screen"
+        cwd="node">
+     
+    </node>
+</launch>

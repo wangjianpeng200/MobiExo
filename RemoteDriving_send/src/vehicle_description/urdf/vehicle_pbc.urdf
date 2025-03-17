@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<robot name="vehicle_2">
+  <material name="orange">
+    <color rgba="1.0 0.5 0.2 1" />
+  </material>
+  <material name="gray">
+    <color rgba="0.2 0.2 0.2 1" />
+  </material>
+
+  <link name="rslidar">
+    <visual name="base_visual">
+      <origin xyz="0.4 0 -2" rpy="1.5708 0 -1.5808" />
+      <geometry>
+        <mesh filename="package://vehicle_description/urdf/CAR_original.dae" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="base_link" />     #车头
+  <link name="cam0" />          #车顶相机
+  <link name="cam1" />          #车前左相机
+  <link name="cam2" />          #车前右相机
+  <link name="imu" />           #组合导航系统的定位点，现为后天线的位置
+  <link name="center_back" />   #车轮后轴中心
+  <link name="lidar" />         #激光雷达，假想坐标，用于修正激光雷达的安装误差，x向前，y向左，平移距离由具体安转位置决定
+  <link name="pandar" /> 
+  <link name="velodyne" /> 
+ 
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="lidar" />
+    # 1degreens = 0.01745329radians
+    <origin xyz="0 -0.5 0" rpy="0 0 1.6057963"/> #只能修改xyz.
+  </joint>
+
+
+  <joint name="rslidar_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="rslidar" />
+    # 1degreens = 0.01745329radians
+    <origin xyz="0 -0.5 0" rpy="0 0 1.6057963"/> #加大是顺时针，减小是逆时针  "0 -0.08726 1.5697963"
+  </joint>
+
+  <joint name="rslidar_pandar_joint" type="fixed">
+    <parent link="rslidar" />
+    <child link="pandar" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="rslidar_velodyne_joint" type="fixed">
+    <parent link="rslidar" />
+    <child link="velodyne" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  
+  <joint name="rslidar_cam_joint" type="fixed">
+    <parent link="rslidar" />
+    <child link="cam0" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="cam0_cam1_joint" type="fixed">
+    <parent link="cam0" />
+    <child link="cam1" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="cam1_cam2_joint" type="fixed">
+    <parent link="cam1" />
+    <child link="cam2" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="base_imu_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="imu" />
+    <origin xyz="0 -0.8 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="back_c_imu_joint" type="fixed">
+    <parent link="imu" />
+    <child link="center_back" />
+    <origin xyz="0 -0.05 0" rpy="0 0 0"/>
+  </joint>
+
+</robot>

@@ -1,0 +1,8 @@
+#------------------------------
+#路径规划
+#------------------------------
+bool     enable     #变道使能
+float32  target_d   #平移距离
+float32  target_s   #行驶target_s米后平移完成
+---
+bool    isSuccess

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package>
+  <name>road_lane_publisher</name>
+  <version>1.0.0</version>
+  <description>The road_lane_publisher package</description>
+
+  <maintainer email="504755617@qq.com">lmx</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <run_depend>roscpp</run_depend>
+  <build_depend>actions</build_depend>
+  <run_depend>actions</run_depend>
+
+  
+
+
+
+  <export></export>
+</package>

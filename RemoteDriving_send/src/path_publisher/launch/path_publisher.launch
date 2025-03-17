@@ -1,0 +1,9 @@
+<launch>
+    <!-- 启动 path_publisher 节点 -->
+    <node name="path_publisher" pkg="path_publisher" type="path_publisher" output="screen">
+    </node>
+    <!-- <node pkg="map_server" type="map_server" name="map_server" args="$(find path_publisher)/maps/gps_map.yaml"/> -->
+
+    <!-- 启动 RViz -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find path_publisher)/rviz/Pure_Pursuit.rviz" />
+</launch>

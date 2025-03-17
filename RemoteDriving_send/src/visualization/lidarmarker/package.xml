@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package>
+  <name>lidarmarker</name>
+  <version>1.0.0</version>
+  <description>The lidarmarker package</description>
+
+  <maintainer email="504755617@qq.com">lmx</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <run_depend>roscpp</run_depend>
+  
+  
+
+
+
+  <export></export>
+</package>

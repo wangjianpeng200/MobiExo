@@ -1,0 +1,24 @@
+#------------------------------
+#任务请求
+#------------------------------
+uint8                   Is_Light_mission                 = 1    #灯光控制任务
+uint8                   Is_Avoid_obstacle                = 2   
+uint8                   Is_Pedestrian_vehicle            = 3    
+uint8                   Is_Pedestrian_crossing           = 4    
+uint8                   Is_Random_delivery               = 5    
+uint8                   Is_Follow_car                    = 6    
+uint8                   Is_Identify_delivery             = 7    
+uint8                   Is_Pass_traffic_light            = 8    
+uint8                   Is_End_stop                      = 9
+uint8                   Is_Charge                        = 10
+uint8                   Is_AEB_stop                      = 11
+uint8                   Is_Low_speed                      = 13
+uint8                   Real_time_oba                    =12
+uint8     task_type      #任务id
+float64   s_start        #任务区间起始
+float64   s_end          #任务区间结束
+float64   info           #任务信息
+float64   info_2         #任务信息2
+---
+bool isSuccess
+

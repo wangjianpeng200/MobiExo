@@ -1,0 +1,11 @@
+<launch>
+    <node
+        pkg="nova_nav"
+        type="node_nova_navigation"
+        name="node_navigation"
+        output="screen"
+        cwd="node">
+        <param name="map_longitude" value="106" />
+        <param name="map_latitude" value="29" />
+    </node>
+</launch>

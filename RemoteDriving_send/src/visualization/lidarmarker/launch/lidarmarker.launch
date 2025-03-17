@@ -1,0 +1,14 @@
+<launch>
+    <node pkg="lidarmarker"
+        type="lidar_marker"
+        name="lidar_marker"
+        output="screen"
+        cwd="node">
+    <param name="road_lane_topic" type="string"     value="/road_lane" />
+    <param name="ass_object_topic" type="string"    value="/ass_object" />
+    <param name="ukf_object_topic" type="string"    value="/ObjectArray" />
+    <param name="detect_object_topic" type="string" value="/detect_topic" />
+    <param name="path_topic" type="string"          value="/marker_path" />
+    </node>
+
+</launch>

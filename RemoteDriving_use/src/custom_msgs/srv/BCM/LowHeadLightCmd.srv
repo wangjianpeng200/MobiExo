@@ -1,0 +1,33 @@
+#---------------------------------------------------------------
+# 作者 ：杨东
+# 时间 ：2019.08.12
+# 版权 ：重庆邮电大学自动化学院汽车电子工程中心智能车辆技术团队
+# 说明 ：
+#      BCM LCM_LowLight  近光灯命令   0x0:TurnOff 0x1：Turn On；
+#                                   0x2：Upanddown;0x3:Stop
+#          LCM_HeadLight 远光灯命令  0x0:Turn Off;0x1:Turn On
+#----------------------------------------------------------------
+
+#请求---------------------------------------------------------
+##定义赋值枚举
+uint8 LowTurnOff=0
+uint8 LowTurnOn=1
+uint8 LowUpandDown=2
+uint8 LowStop=3
+#HeadLight
+uint8 HTurnOff=0
+uint8 HTurnOn=1
+#控制字段
+uint8 LowLightEnable
+#
+uint8 HeadLightEnable
+
+
+
+---
+#返回值-----------------------------------------------------------
+##定义赋值枚举
+bool res
+#控制字段
+
+

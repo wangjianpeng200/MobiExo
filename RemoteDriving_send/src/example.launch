@@ -1,0 +1,95 @@
+<launch>
+    <param name="use_sim_time" value="false" />
+
+#------------------------------车辆建模--------------------------------------------#
+     <include file="$(find vehicle_description)/launch/urdf.launch" /> 
+
+#-------------------------------交互-----------------------------------------------#	
+    <!--include file="$(find link2app)/launch/link2app.launch" />
+    <include file="$(find link2mysql)/launch/link2mysql.launch"/>
+    <include file="$(find warning)/launch/warning.launch"/>-->
+    <!-- <include file="$(find udp_telecontrol)/launch/udp_telecontrol.launch"/> -->
+
+#------------------------------定位与地图发布----------------------------------------#
+    <include file="$(find udp_to_path)/launch/udp.launch" />
+    
+   
+#------------------------------定位与地图发布----------------------------------------#
+    #UWB	
+     <!--<include file="$(find nlink_parser)/launch/linktrack.launch" />-->
+     <!--<include file="$(find location)/launch/location.launch" /> -->
+    #SLAM   
+    <!-- <include file="$(find cartographer_ros)/launch/my_robot_purLocation.launch" /> -->
+    <!-- <include file="$(find cartographer_ros)/launch/my_robot.launch" /> -->
+    #组合导航 
+    <!-- <include file="$(find nova_nav)/launch/node_navigation.launch" />-->
+    <!-- <include file="$(find npos_220)/launch/NPOS_220.launch" />-->
+    <include file="$(find cgi_navigation)/launch/cgi_navigation.launch" />
+    <!-- <include file="$(find cgi_navigation)/launch/cgi_310.launch" /> --> 
+    #DTU
+    <!--<include file="$(find dtu)/launch/dtu.launch" />-->	
+    #坐标转换
+    <include file="$(find gnss_localizer)/launch/gnss_localizer.launch" />
+     <!-- <include file="$(find gnss_localizer)/launch/gnss_localizer_slam_gnss.launch" /> -->
+    #地图发布
+    <!-- <include file="$(find road_lane_publisher)/launch/road_lane_pub.launch" />  -->
+#------------------------------激光雷达----------------------------------#	
+    <!-- <include file="$(find udp_to_path)/launch/udp.launch" /> -->
+    <include file="$(find path_publisher)/launch/path_publisher.launch" />
+    <!-- <include file="$(find udp_package)/launch/udp_package.launch" /> -->
+
+
+    #雷达32线
+    <!--<include file="$(find rslidar_pointcloud)/launch/rs_lidar_32_ip40.launch" />-->
+    <!--<include file="$(find lidar_calibration)/launch/lidar_calib.launch" />-->
+    #雷达16线
+    <!--<include file="$(find rslidar_pointcloud)/launch/rs_lidar_16_ip41.launch" />-->
+    #velodyne 32线
+    <!--<include file="$(find velodyne_pointcloud)/launch/VLP-32C_points.launch" />-->
+    #禾塞64线
+    <!-- <include file="$(find hesai_lidar)/launch/hesai_lidar.launch" /> -->
+    #镭神32线
+    <!--include file="$(find lslidar_c16_decoder)/launch/lslidar_c16.launch" />  -->
+    #16线
+    <!-- <include file="$(find rslidar_sdk)/launch/start.launch" /> -->
+  
+    #目标检测
+    <!-- <include file="$(find euclidean_cluster_detect)/launch/targetdetect.launch" />  -->
+    <!-- <include file="$(find lidar_trans_map)/launch/lidartrans.launch" />  -->
+    <!-- <include file="$(find filter)/launch/filter.launch" />  -->
+    <!-- <include file="$(find lidarmarker)/launch/lidarmarker.launch" /> -->
+ 
+    #通信
+    <!-- <include file="$(find interactive)/launch/interactive.launch" /> -->
+#------------------------------毫米波雷达-------------------------------------------#	
+    #暂未添加       
+
+#------------------------------目标跟踪滤波与融合-----------------------------------#	
+    <!-- <include file="$(find object_track)/launch/tracking.launch" />  -->
+    <!-- <include file="$(find obj_track)/launch/obj_track.launch" />  -->
+    <!-- <include file="$(find for_traffic_cones)/launch/for_traffic_cones.launch" /> -->
+    <!-- <include file="$(find ukf)/launch/ukf.launch" /> -->
+    <!--<include file="$(find fake_object_tracking)/launch/fake.launch" />--> 
+    <!--<include file="$(find lidar2image)/launch/point2image.launch" />-->	
+
+#------------------------------路径规划与“决策”-----------------------------------#	
+   <!-- <include file="$(find routing_planning)/launch/routing.launch" />  -->
+   <!-- <include file="$(find task_pub)/launch/task_pub.launch" /> -->
+   <!-- <include file="$(find task_exc)/launch/task_exc.launch" />  -->
+   <!-- <include file="$(find aeb)/launch/aeb.launch" /> -->
+  
+#---------------------------------V2X--------------------------------------------------#	
+    <!-- <include file="$(find obu)/launch/udp_obu_node_turnlight.launch" />  -->
+    <!--<include file="$(find obu)/launch/fake_v2x.launch" /> -->
+    <!-- <include file="$(find park)/launch/park.launch" /> -->
+
+#--------------------------------RVIZ-----------------------------------------#	
+    <!-- <node pkg="rviz" type="rviz" name="rviz"  respawn = "false" -->
+            <!-- args="-d $(find vehicle_description)/rviz_cfg/debug.rviz"/>   -->
+#-------------------------------SLAM rviz--------------------------------------------#
+    <!-- <node name="rviz" pkg="rviz" type="rviz" 
+      args="-d $(find cartographer_ros)/configuration_files/demo_2d.rviz" />   -->
+
+</launch> 
+
+

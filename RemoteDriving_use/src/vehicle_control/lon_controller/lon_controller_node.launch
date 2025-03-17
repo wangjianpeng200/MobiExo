@@ -1,0 +1,15 @@
+<launch>
+    <node
+        pkg="lon_controller"
+        type="lon_controller_node"
+        name="lon_controller_node"
+        output="screen"
+        cwd="node">
+    </node>
+        <param name="error" value="0" />
+        <param name="error_last" value="0" />
+        <param name="KP" value="0.91" />
+        <param name="KI" value="0.0" />
+        <param name="KD" value="0.055" />
+        <param name="speed" value="4" />
+</launch>

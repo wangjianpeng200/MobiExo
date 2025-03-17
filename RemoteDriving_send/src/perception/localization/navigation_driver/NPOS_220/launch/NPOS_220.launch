@@ -1,0 +1,9 @@
+<launch>
+    <node
+        pkg="npos_220"
+        type="npos_220_node"
+        name="npos_220_node"
+        output="screen"
+        cwd="node">
+    </node>
+</launch>

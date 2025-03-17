@@ -1,0 +1,8 @@
+<launch>
+    <!-- 启动 path_publisher 节点 -->
+    <node name="udp_package" pkg="udp_package" type="udp_sender" output="screen">
+
+    </node>
+
+
+</launch>

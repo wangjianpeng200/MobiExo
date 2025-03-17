@@ -1,0 +1,14 @@
+#------------------------------
+#交通灯请求
+#------------------------------
+float32 direction       #车辆即将开往的方向，单位°，以车头为0，顺时针为正方向
+float64 longitude       #交通灯所在路口中心的经度
+float64 latitude        #交通灯所在路口中心的纬度
+---
+int32 GREEN=2
+int32 RED=1
+int32 YELLOW=4
+int32 INVALID=0
+
+int32 color             # 1 red 2 green 3 黄色 -1无效
+int32 time              # 剩余时间

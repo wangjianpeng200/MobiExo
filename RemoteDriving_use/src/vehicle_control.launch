@@ -1,0 +1,5 @@
+<launch>
+    <include file="$(find lat_controller)/lat_controller_node.launch"/>
+    <include file="$(find lon_controller)/lon_controller_node.launch"/>
+    <include file="$(find vehicle_chassis_n3)/vehicle_chassis_node.launch"/>
+</launch>

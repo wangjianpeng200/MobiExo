@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<robot name="vehicle_2">
+  <material name="orange">
+    <color rgba="1.0 0.5 0.2 1" />
+  </material>
+  <material name="gray">
+    <color rgba="0.2 0.2 0.2 1" />
+  </material>
+
+  <link name="rslidar">
+    <visual name="base_visual">
+      <origin xyz="0.4 0 -2" rpy="1.5708 0 -1.5708" />
+      <geometry>
+        <mesh filename="package://vehicle_description/urdf/CAR_original.dae" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="base_link" />     #车头
+  <link name="cam0" />          #车顶相机
+  <link name="cam1" />          #车前左相机
+  <link name="cam2" />          #车前右相机
+  <link name="imu" />           #惯导，车轮后轴中心
+  <link name="center_back" />   #惯导，车轮后轴中心
+
+
+
+  <joint name="rslidar_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="rslidar" />
+    # 1degreens = 0.0174radians
+    <origin xyz="0 -3.2 0" rpy="0 0 1.452"/>
+  </joint>
+
+  <joint name="rslidar_cam_joint" type="fixed">
+    <parent link="rslidar" />
+    <child link="cam0" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="cam0_cam1_joint" type="fixed">
+    <parent link="cam0" />
+    <child link="cam1" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="cam1_cam2_joint" type="fixed">
+    <parent link="cam1" />
+    <child link="cam2" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="base_imu_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="imu" />
+    <origin xyz="0 -1.0 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="back_c_imu_joint" type="fixed">
+    <parent link="imu" />
+    <child link="center_back" />
+    <origin xyz="0 0.1 0" rpy="0 0 0"/>
+  </joint>
+
+</robot>

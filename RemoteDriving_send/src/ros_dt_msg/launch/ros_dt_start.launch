@@ -1,0 +1,9 @@
+<launch>
+  <node pkg="ros_dt_msg"     type="ros_dt_msg" name="publish_dt_msg" output="screen">
+    <param name="usart_port"         type="string" value="/dev/ttyUSB0"/>
+    <param name="baud_data"          type="int"    value="115200"/>
+    <param name="control_mode"          type="int"    value="1"/>
+  </node>
+</launch>
+
+

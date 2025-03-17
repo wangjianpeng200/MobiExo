@@ -1,0 +1,9 @@
+<launch>
+    <node pkg="road_lane_publisher"
+        type="road_lane_publisher_node"
+        name="node_road_lane"
+        output="screen"
+        cwd="node">
+    </node>
+
+</launch>

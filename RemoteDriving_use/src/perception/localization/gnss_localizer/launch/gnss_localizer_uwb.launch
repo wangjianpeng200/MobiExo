@@ -1,0 +1,16 @@
+<launch>
+    <node
+        pkg="gnss_localizer"
+        type="simple_localization_uwb_node"
+        name="gnss_localizer_node"
+        output = "screen">
+
+        <param name="map_longitude" value="106.601925836" />
+        <param name="map_latitude" value="29.5377395072" />
+
+	    <param name="map_yaw" value="0" />
+
+        <param name="is_display_trajectory" value="true" /> #是否显示轨迹
+        <param name="is_save_trajectory" value="true" />    #是否保存轨迹，需要启用显示轨迹,默认存在/$SEED_HOME/data/navidation/trajectory.txt
+    </node>
+</launch>

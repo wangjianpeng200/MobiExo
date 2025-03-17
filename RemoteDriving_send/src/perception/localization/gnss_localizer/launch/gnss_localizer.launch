@@ -1,0 +1,41 @@
+<launch>
+    <node
+        pkg="gnss_localizer"
+        type="simple_localization_node"
+        name="gnss_localizer_node"
+        output = "screen">
+        <!--<param name="map_longitude" value="106.601928865" />
+        <param name="map_latitude" value="29.5377413215" />-->
+        <!--<param name="map_longitude" value="106.475177532" />
+        <param name="map_latitude" value="29.67234258" />-->
+        
+        # 学校
+        <!-- <param name="map_longitude" value="106.601925836" />
+        <param name="map_latitude" value="29.5377395072" /> -->
+
+        # 仙桃
+        <param name="map_longitude" value="106.55382867" />
+        <param name="map_latitude" value="29.74668727" />
+        
+        # 比赛
+        <!-- <param name="map_longitude" value="106.82390742" />
+        <param name="map_latitude" value="29.71473423" /> -->
+
+        # lilong
+        <!-- <param name="map_longitude" value="106.7374452" />
+        <param name="map_latitude" value="29.6448477" /> -->
+
+        # zqy
+        <!-- <param name="map_longitude" value="106.4755256" />
+        <param name="map_latitude" value="29.67282537" /> -->
+
+        <param name="map_yaw" value="0" />
+
+        <param name="is_display_trajectory" value="true" /> #是否显示轨迹
+        <param name="is_save_trajectory" value="true" />    #是否保存轨迹，需要启用显示轨迹,默认存在/$SEED_HOME/data/navidation/trajectory.txt
+    </node>
+</launch>
+
+
+
+

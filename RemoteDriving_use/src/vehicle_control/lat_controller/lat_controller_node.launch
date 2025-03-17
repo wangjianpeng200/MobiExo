@@ -1,0 +1,20 @@
+<launch>
+    <node
+        pkg="lat_controller"
+        type="lat_controller_node"
+        name="lat_controller_node"
+        output="screen"
+        cwd="node">
+        <param name="veh_len" value="4.500" />
+        <param name="veh_width" value="1.855" />
+        <param name="veh_hight" value="1.690" />
+        <param name="veh_mass" value="1520" />
+        <param name="veh_f_tread" value="1.580" />
+        <param name="veh_r_tread" value="1.565" />
+        <param name="veh_wheelbase" value="2.650" />
+        <param name="veh_steering_ratio" value="16.200" />
+        <param name="veh_max_wheel_turn_angle" value="27.76 " />
+        <param name="veh_max_steer_turn_angle" value="449" />
+        <param name="veh_wheel_diam" value="0.8475 " />
+    </node>
+</launch>

@@ -1,0 +1,15 @@
+<launch>
+    <node
+        pkg="gnss_localizer"
+        type="simple_localization_slamindoor_node"
+        name="gnss_localizer_node"
+        output = "screen">
+
+      #  <param name="map_longitude" value="106.601925836" />
+      #  <param name="map_latitude" value="29.5377395072" />
+	  #  <param name="map_yaw" value="0" />
+
+        <param name="is_display_trajectory" value="true" />  
+        <param name="is_save_trajectory" value="true" />  
+    </node>
+</launch>

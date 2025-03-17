@@ -1,0 +1,15 @@
+#------------------------------
+#横向规划
+#------------------------------
+
+uint8    Is_stop = 1
+uint8    Is_aeb  = 2
+uint8    Is_back = 3
+uint8    Is_switch_speed = 4
+
+uint8   type     #控制类别
+bool    enable   #使能
+float32 info     #包括速度、刹车距离
+string  source   #控制消息来源
+---
+bool    isSuccess
