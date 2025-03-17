@@ -1,14 +1,18 @@
-<h1 align="center"> MobiExo: GPS-SLAM Fusion for Seamless Indoor-Outdoor Mobile
-Manipulation with Hand-Foot Coordination </h1>
+# MobiExo: GPS-SLAM Fusion for Seamless Indoor-Outdoor Mobile Manipulation with Hand-Foot Coordination
 
-## Remote系统总览
-![overview](doc/IntelligentDrive.png)
+## MobiExo系统硬件
+控制器：nvidia orin kit 开发套件  
+惯导：华测 G610  
+机器人机械臂：rml-gen72  
+相机：Gemini 335 / realsense 435i  
 
-## 安装向导
-推荐在Ubuntu16.04下使用<br>
-1.安装ROS Kinetic桌面完整版,Kinetic为Ubuntu 16.04下的ROS版本名称，若当前使用其他版本的Ubuntu，请注意选择相应版本<br>
-请按照官方教程安装：[http://wiki.ros.org/cn/kinetic/Installation/Ubuntu](http://wiki.ros.org/cn/kinetic/Installation/Ubuntu)     
-2.安装依赖
+## Remote安装向导
+需要在orin控制器上安装以下环境，推荐在Ubuntu 16.04下使用
+
+1. 安装ROS Kinetic桌面完整版（Kinetic为Ubuntu 16.04下的ROS版本名称，若当前使用其他版本的Ubuntu，请注意选择相应版本）  
+   官方安装教程：[http://wiki.ros.org/cn/kinetic/Installation/Ubuntu](http://wiki.ros.org/cn/kinetic/Installation/Ubuntu)
+
+2. 安装依赖
 ```shell
 sudo apt-get install libpcap-dev  
 sudo apt-get install ros-$ROS_DISTRO-tf2    
@@ -36,7 +40,6 @@ export SEED_HOME=/home/sushold/Desktop/workspace/Seed
 cd $SEED_HOME
 catkin_make
 ```
-
 #### ubuntu下c++连接postgresql数据库
 ```
 法1：sudo apt-get install libpqxx-dev
@@ -50,9 +53,17 @@ cd libpqxx-4.0
 make
 sudo make install
 ```
+## 使用说明
+
+RemoteDriving_use和RemoteDriving_send节点均为ROS节点，需要在ROS环境下运行。需要分别部署在两个ARM架构的控制器上。并且分别运行。
+# RemoteDriving_send
+该部分用于发送控制指令到RemoteDriving_use节点，从惯导获取当前位置和姿态，发送到use端。
+# RemoteDriving_use
+该部分用于接受send发出的位置信息，以及记录机械臂的关节信息，图像信息，以及底盘的线速度角速度信息。
+具体使用中需要在```RemoteDriving_use\src\vehicle_control```文件夹下将can协议修改为自己的底盘
 
 
-## ACE程序框图
+## ACE_gen72程序框图
 ![](/images/image-14.png)
 
 ## 介绍
@@ -186,4 +197,4 @@ sudo make install
 
 ## Acknowlegments
 
-This code base refers a lot to many previous amazing works like [BunnyVisionPro](https://github.com/Dingry/bunny_teleop_server), [OpenTeleVision](https://github.com/OpenTeleVision/TeleVision), [GELLO](https://github.com/wuphilipp/gello_software). Also, the codes are built on some superior public project, such as [pinocchio](https://github.com/stack-of-tasks/pinocchio) and [dex-retargeting](https://github.com/dexsuite/dex-retargeting).
+This code base refers a lot to many previous amazing works like[ACE](https://github.com/ACETeleop/ACETeleop.git)  [BunnyVisionPro](https://github.com/Dingry/bunny_teleop_server), [OpenTeleVision](https://github.com/OpenTeleVision/TeleVision), [GELLO](https://github.com/wuphilipp/gello_software). Also, the codes are built on some superior public project, such as [pinocchio](https://github.com/stack-of-tasks/pinocchio) and [dex-retargeting](https://github.com/dexsuite/dex-retargeting).
